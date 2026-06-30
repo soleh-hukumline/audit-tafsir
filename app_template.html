@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sistem Audit Tafsir — fī sabīlillāh</title>
+<style>
+:root{
+  --bg:#0f1419; --panel:#1a2129; --panel2:#222b35; --line:#2c3744;
+  --ink:#e6edf3; --mut:#9fb0c0; --acc:#4ea1d3; --acc2:#7bc96f;
+  --p1:#e06c75; --p2:#e5c07b; --p3:#56b6c2; --warn:#d19a66; --good:#7bc96f; --bad:#e06c75;
+  --shadow:0 2px 12px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg);color:var(--ink);font-size:14px;line-height:1.55}
+h1,h2,h3,h4{margin:0 0 .4em}
+a{color:var(--acc)}
+header{padding:14px 20px;background:linear-gradient(180deg,#1a2129,#141a20);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50}
+header h1{font-size:17px}
+header .sub{color:var(--mut);font-size:12.5px}
+nav{display:flex;gap:4px;margin-top:10px;flex-wrap:wrap}
+nav button{background:var(--panel2);color:var(--mut);border:1px solid var(--line);padding:7px 14px;border-radius:8px 8px 0 0;cursor:pointer;font-size:13px;font-weight:600}
+nav button.active{background:var(--acc);color:#08151d;border-color:var(--acc)}
+main{padding:18px 20px;max-width:1500px;margin:0 auto}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:16px;box-shadow:var(--shadow)}
+.muted{color:var(--mut)}
+.pill{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;color:#08151d}
+.pill.P1{background:var(--p1)} .pill.P2{background:var(--p2)} .pill.P3{background:var(--p3)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:1000px){.grid2,.grid3{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+th{background:var(--panel2);color:var(--mut);font-weight:700;position:sticky;top:0}
+tr:nth-child(even) td{background:rgba(255,255,255,.015)}
+select,input,textarea,button{font-family:inherit;font-size:13px}
+select,input[type=text],textarea{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:7px;padding:7px 9px;width:100%}
+textarea{resize:vertical;min-height:54px}
+label{display:block;font-size:11.5px;color:var(--mut);font-weight:700;margin:0 0 4px;text-transform:uppercase;letter-spacing:.03em}
+.btn{background:var(--acc);color:#08151d;border:none;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer}
+.btn.sec{background:var(--panel2);color:var(--ink);border:1px solid var(--line)}
+.btn.danger{background:var(--bad);color:#1a0a0a}
+.btn.gold{background:var(--p2);color:#1a1405}
+.btn:hover{filter:brightness(1.08)}
+.btn.sm{padding:5px 10px;font-size:12px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.field{flex:1;min-width:140px}
+.readpane{height:460px;overflow:auto;background:#0c1116;border:1px solid var(--line);border-radius:8px;padding:14px}
+.readpane p{margin:0 0 .7em}
+.gt-ar{direction:rtl;font-size:18px;line-height:2.1;color:#cfe3f2;font-family:"Geeza Pro","Scheherazade New","Traditional Arabic",serif}
+.kpi{display:flex;gap:14px;flex-wrap:wrap}
+.kpi .box{flex:1;min-width:120px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px}
+.kpi .box .n{font-size:26px;font-weight:800}
+.kpi .box .l{font-size:11.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}
+.bar{height:13px;border-radius:7px;background:var(--acc)}
+.bar-track{background:var(--panel2);border-radius:7px;overflow:hidden;height:13px}
+.scorebadge{font-weight:800;font-size:15px;padding:2px 9px;border-radius:7px}
+.scorebadge.sm{font-size:13px}
+.tag{font-size:11px;padding:1px 7px;border-radius:6px;border:1px solid var(--line);color:var(--mut)}
+.findrow td{font-size:12.5px}
+details summary{cursor:pointer;font-weight:700;color:var(--acc)}
+.chip{cursor:pointer;padding:6px 10px;border-radius:7px;background:var(--panel2);border:1px solid var(--line);font-size:12.5px;color:var(--mut)}
+.chip.active{background:var(--acc);color:#08151d;border-color:var(--acc);font-weight:700}
+.small{font-size:11.5px}
+.flexsb{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.gtsel{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap}
+.notice{background:#2a2018;border:1px solid var(--warn);color:#e5c07b;padding:8px 12px;border-radius:8px;font-size:12.5px}
+.rubric-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(max-width:900px){.rubric-grid{grid-template-columns:1fr}}
+.rubric-item{background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:10px}
+.rubric-item .nm{font-weight:700;font-size:12.5px}
+.rubric-item .ds{font-size:11px;color:var(--mut);margin:3px 0 7px}
+.seg{display:flex;gap:4px}
+.seg button{flex:1;background:#0c1116;border:1px solid var(--line);color:var(--mut);border-radius:6px;padding:5px;cursor:pointer;font-weight:700}
+.seg button.on0{background:var(--bad);color:#1a0a0a;border-color:var(--bad)}
+.seg button.on1{background:var(--warn);color:#1a1405;border-color:var(--warn)}
+.seg button.on2{background:var(--good);color:#08151d;border-color:var(--good)}
+.autotag{font-size:10px;color:var(--p2);font-weight:700;border:1px solid var(--p2);border-radius:5px;padding:0 5px}
+</style>
+</head>
+<body>
+<header>
+  <h1 id="h-title">Sistem Audit Tafsir</h1>
+  <div class="sub" id="h-sub"></div>
+  <nav id="nav"></nav>
+</header>
+<main id="main"></main>
+
+<script>
+/* ======= DATA (embedded) ======= */
+const DATA = __DATA__;
+/* ================================ */
+
+const LS_FIND="audit_tafsir_findings_v1", LS_CFG="audit_tafsir_config_v1", LS_RUB="audit_tafsir_rubric_v1";
+const $=(s,el=document)=>el.querySelector(s), $$=(s,el=document)=>[...el.querySelectorAll(s)];
+const esc=s=>(s==null?"":String(s)).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const isAr=s=>/[؀-ۿ]/.test(s) && !/[A-Za-z]{3}/.test(s);
+
+// ---------- state ----------
+let findings=load(LS_FIND,[]);
+let rubric=load(LS_RUB,{});                 // rubric[run_id] = {r1:0..2|null,...}
+let cfg=load(LS_CFG,{
+  pillarWeight:{P1:1.0,P2:1.0,P3:1.0}, K:5,
+  statusFactor:{"Terkonfirmasi":1,"Diragukan":0.5,"Tidak terbukti":0,"Perlu cek ulang":0.25}
+});
+let curRun=DATA.responses[0]?.run_id||null, curGT=DATA.ground_truth[0]?.id||null, gtMode="ar";
+function load(k,def){try{const v=JSON.parse(localStorage.getItem(k));return v??def;}catch(e){return def;}}
+function save(){localStorage.setItem(LS_FIND,JSON.stringify(findings));localStorage.setItem(LS_CFG,JSON.stringify(cfg));localStorage.setItem(LS_RUB,JSON.stringify(rubric));}
+
+const catByName=Object.fromEntries(DATA.taxonomy.categories.map(c=>[c.name,c]));
+const respByRun=Object.fromEntries(DATA.responses.map(r=>[r.run_id,r]));
+const models=[...new Set(DATA.responses.map(r=>r.model))];
+const RUB=DATA.taxonomy.rubric;
+const pcls=p=>p==="P1"?"p1":p==="P2"?"p2":"p3";
+
+// ---------- scoring: Indeks Akurasi (penalti negatif) ----------
+const statusF=s=>cfg.statusFactor[s]??0;
+function findingPenalty(f){const c=catByName[f.category];if(!c)return 0;const sev=f.severity!=null?f.severity:c.severity;return sev*(cfg.pillarWeight[c.pillar]??1)*statusF(f.status);}
+const runFindings=run=>findings.filter(f=>f.run_id===run);
+function runScore(run){const pen=runFindings(run).reduce((a,f)=>a+findingPenalty(f),0);return Math.max(0,+(100-pen*cfg.K).toFixed(1));}
+function modelScore(m){const rs=DATA.responses.filter(r=>r.model===m);return rs.length?+(rs.reduce((a,r)=>a+runScore(r.run_id),0)/rs.length).toFixed(1):100;}
+const scoreColor=v=>v>=85?"var(--good)":v>=65?"var(--warn)":"var(--bad)";
+
+// ---------- scoring: Skor Kualitas (rubrik positif) ----------
+const rubScores=run=>rubric[run]||{};
+function qualityScore(run){const r=rubScores(run);const vals=RUB.map(d=>r[d.id]).filter(v=>v!=null&&v!=="");if(!vals.length)return null;return +(vals.reduce((a,v)=>a+ +v,0)/(vals.length*2)*100).toFixed(1);}
+function modelQuality(m){const rs=DATA.responses.filter(r=>r.model===m).map(r=>qualityScore(r.run_id)).filter(v=>v!=null);return rs.length?+(rs.reduce((a,v)=>a+v,0)/rs.length).toFixed(1):null;}
+function dimAvg(dimId){const vals=DATA.responses.map(r=>rubScores(r.run_id)[dimId]).filter(v=>v!=null&&v!=="");return vals.length?+(vals.reduce((a,v)=>a+ +v,0)/vals.length).toFixed(2):null;}
+
+// ===================================================================
+//  AUTO-CODER (heuristik) — kandidat temuan + rubrik, "Perlu cek ulang"
+// ===================================================================
+const SIG={
+  ijma:/ijmāʿ|ijma['ʿ]?\b|sepakat|disepakati|kesepakatan|konsensus|seluruh ulama|semua ulama|tanpa perbedaan|tidak ada (perbedaan|khilaf|khilāf)/i,
+  modern:/pendidikan|dakwah|infrastruktur|rumah sakit|kepentingan umum|kemaslahatan umum|kemaslahatan publik|pembangunan|beasiswa|fasilitas umum|kontemporer|modern|kemanusiaan|segala (bentuk )?kebaikan|jalan kebaikan|amal kebaikan/i,
+  cite:/(jld|jilid|juz|vol)\.?\s*\d|(hlm|hal|h)\.?\s*\d{1,4}|halaman\s*\d/i,
+  sanadStrong:/حدثنا|أخبرنا|ثنا|ḥaddathan|haddathan|akhbaran|no\.?\s*\d{4,5}|nomor athar/i,
+  sanadWeak:/sanad|isnād|isnad|riwayat|atsar|athar|perawi|mursal|marfū|mauqūf|periwayat/i,
+  jihad:/ghaz(w|a)|غز|jihād|jihad|berperang|peperangan|pejuang|berjuang di jalan|al-?gh(u|ā)z|militer|al-?ghāzī/i,
+  haji:/\bhaji\b|ḥajj|حج/i,
+  hajiAuth:/Aḥmad|Ahmad|Isḥāq|Ishaq|al-?Ḥasan|al-?Hasan/i,
+  tabari:/Ṭabarī|Thabari|Tabari|الطبري/i,
+  ibnkathir:/Ibn Kathīr|Ibnu? Katsir|Ibn Kathir|ابن كثير|Katsir/i,
+  qurtubi:/Qurṭubī|Qurtubi|القرطبي/i,
+};
+function sentenceWith(text,re){
+  const parts=text.split(/(?<=[\.\!\?؟])\s+|\n+/);
+  for(const s of parts){if(re.test(s))return s.trim();}
+  const m=text.match(re); return m?text.slice(Math.max(0,text.indexOf(m[0])-40),text.indexOf(m[0])+120).trim():"";
+}
+function autoCode(run){
+  const r=respByRun[run], text=r.paragraphs.join("\n");
+  findings=findings.filter(f=>!(f.run_id===run&&f.coder==="auto"));   // ganti hasil auto lama, simpan manual
+  const add=(cat,re,note)=>{const q=sentenceWith(text,re);findings.push({id:"a"+Date.now().toString(36)+Math.random().toString(36).slice(2,6),run_id:run,model:r.model,category:cat,severity:null,status:"Perlu cek ulang",coder:"auto",quote:q.slice(0,300),source:"",note:note});};
+  if(SIG.ijma.test(text)) add("False Consensus (Ijmāʿ)",SIG.ijma,"Auto: terdeteksi klaim kesepakatan/ijmāʿ — cek apakah sumber justru khilāf.");
+  if(SIG.modern.test(text)) add("Anachronistic Expansion",SIG.modern,"Auto: terdeteksi perluasan makna ke ranah modern/umum — cek dasar ma'thūr.");
+  if(SIG.cite.test(text)) add("Citation Fabrication",SIG.cite,"Auto: terdeteksi rujukan jilid/halaman — verifikasi ke edisi sumber.");
+  if(!SIG.sanadStrong.test(text)&&!SIG.sanadWeak.test(text)) add("Essay-ization",/.+/,"Auto: tak ada penanda sanad/atsar — kemungkinan esai-isasi.");
+  // rubrik otomatis (dim bersinyal jelas; r6,r7 dibiarkan manual)
+  const R={};
+  const muf=[SIG.tabari,SIG.ibnkathir,SIG.qurtubi].filter(re=>re.test(text)).length;
+  R.r1 = muf>=3?2:muf===2?1:0;
+  R.r2 = SIG.jihad.test(text)?2:0;
+  R.r3 = SIG.haji.test(text)?(SIG.hajiAuth.test(text)?2:1):0;
+  R.r4 = SIG.sanadStrong.test(text)?2:SIG.sanadWeak.test(text)?1:0;
+  R.r5 = R.r4;
+  R.r8 = SIG.modern.test(text)?0:(rubScores(run).r8??null);
+  rubric[run]=Object.assign({},rubric[run]||{},R);
+  save();
+}
+function autoCodeAll(){DATA.responses.forEach(r=>autoCode(r.run_id));}
+
+// ---------- nav ----------
+const TABS=[["ringkasan","Ringkasan"],["koding","Koding (Kualitatif)"],["kuantitatif","Kuantitatif"],["ekspor","Ekspor / Impor"]];
+let tab="ringkasan";
+function renderNav(){
+  $("#h-title").textContent=DATA.meta.title;$("#h-sub").textContent=DATA.meta.subtitle;
+  $("#nav").innerHTML=TABS.map(([id,l])=>`<button data-tab="${id}" class="${id===tab?'active':''}">${l}</button>`).join("");
+  $$("#nav button").forEach(b=>b.onclick=()=>{tab=b.dataset.tab;render();});
+}
+function render(){renderNav();({ringkasan:renderRingkasan,koding:renderKoding,kuantitatif:renderKuant,ekspor:renderEkspor}[tab])();window.scrollTo(0,0);}
+
+// ---------- TAB: Ringkasan ----------
+function renderRingkasan(){
+  const coded=new Set(findings.map(f=>f.run_id)).size, m=DATA.meta;
+  const pillarRows=DATA.taxonomy.pillars.map(p=>{
+    const cats=DATA.taxonomy.categories.filter(c=>c.pillar===p.id).map(c=>c.name).join(" · ");
+    return `<tr><td style="white-space:nowrap"><span class="pill ${p.id}">${p.id}</span> <b>${esc(p.name)}</b></td><td>${esc(p.desc)}<div class="small muted" style="margin-top:4px">${esc(cats)}</div></td></tr>`;
+  }).join("");
+  const rubRows=RUB.map(d=>`<tr><td><b>${esc(d.name)}</b></td><td class="small muted">${esc(d.desc)}</td></tr>`).join("");
+  $("#main").innerHTML=`
+  <div class="card"><div class="kpi">
+    <div class="box"><div class="n">${DATA.responses.length}</div><div class="l">Respons AI</div></div>
+    <div class="box"><div class="n">${models.length}</div><div class="l">Model</div></div>
+    <div class="box"><div class="n">${DATA.taxonomy.categories.length}</div><div class="l">Kategori error</div></div>
+    <div class="box"><div class="n">${RUB.length}</div><div class="l">Dimensi rubrik</div></div>
+    <div class="box"><div class="n">${findings.length}</div><div class="l">Temuan dikode</div></div>
+    <div class="box"><div class="n">${coded}/${DATA.responses.length}</div><div class="l">Respons tersentuh</div></div>
+  </div></div>
+  <div class="grid2">
+    <div class="card">
+      <h3>Prompt (CoT)</h3><p class="muted small">${esc(m.prompt)}</p>
+      <h3 style="margin-top:14px">Ground truth (sumber pembanding)</h3>
+      <ul class="small muted">${m.ground_truth_refs.map(r=>`<li>${esc(r)}</li>`).join("")}</ul>
+      <p class="small muted">Teks asli Arab tiap kitab + terjemahan tersedia berdampingan di tab Koding.</p>
+    </div>
+    <div class="card">
+      <h3>Dua pola penilaian</h3>
+      <p class="small muted"><b>Kualitatif</b> = (a) temuan error berkode (kutipan + kategori + cek sumber) <i>dan</i> (b) <b>Rubrik Kualitas</b> 8 dimensi positif. <b>Kuantitatif</b> = frekuensi error + <b>Indeks Akurasi</b> (penalti) + <b>Skor Kualitas</b> (rubrik).</p>
+      <details style="margin-top:8px"><summary>Tiga pilar &amp; ${DATA.taxonomy.categories.length} kategori error</summary>
+        <table style="margin-top:8px"><tbody>${pillarRows}</tbody></table></details>
+      <details style="margin-top:8px"><summary>Rubrik kualitas — ${RUB.length} dimensi (skala 0–2)</summary>
+        <table style="margin-top:8px"><tbody>${rubRows}</tbody></table></details>
+    </div>
+  </div>`;
+}
+
+// ---------- TAB: Koding ----------
+function renderKoding(){
+  const r=respByRun[curRun], gt=DATA.ground_truth.find(g=>g.id===curGT);
+  const fs=runFindings(curRun), sc=runScore(curRun), q=qualityScore(curRun);
+  const opts=DATA.responses.map(x=>`<option value="${x.run_id}" ${x.run_id===curRun?'selected':''}>${esc(x.model)} · V${x.version} (${x.run_id})</option>`).join("");
+  const catOpts=DATA.taxonomy.categories.map(c=>`<option value="${esc(c.name)}">${esc(c.name)} — ${c.pillar} (sev ${c.severity})</option>`).join("");
+  const statusOpts=DATA.taxonomy.status_options.map(s=>`<option ${s==="Terkonfirmasi"?"selected":""}>${esc(s)}</option>`).join("");
+  const gtParas = gtMode==="ar"? gt.arabic : (gt.translation.length?gt.translation:gt.arabic);
+
+  $("#main").innerHTML=`
+  <div class="card">
+    <div class="flexsb">
+      <div style="flex:1;min-width:260px"><label>Pilih respons AI</label><select id="selRun">${opts}</select></div>
+      <div style="display:flex;gap:16px;align-items:center">
+        <div style="text-align:center"><div class="l muted small">Indeks Akurasi</div><span class="scorebadge" style="background:${scoreColor(sc)};color:#08151d">${sc}</span></div>
+        <div style="text-align:center"><div class="l muted small">Skor Kualitas</div><span class="scorebadge" style="background:${q==null?'var(--panel2)':scoreColor(q)};color:${q==null?'var(--mut)':'#08151d'}">${q==null?'—':q}</span></div>
+      </div>
+    </div>
+    <div class="flexsb" style="margin-top:8px">
+      <div class="small muted">${esc(r.model)} · ${esc(r.family)} · ${esc(r.source_file)} · ${r.word_count} kata</div>
+      <div style="display:flex;gap:6px"><button class="btn gold sm" id="btnAuto">⚡ Isi otomatis respons ini</button><button class="btn sec sm" id="btnAutoAll">⚡ Isi otomatis SEMUA (28)</button></div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="flexsb"><h3>Respons AI <span class="tag">${esc(r.run_id)}</span></h3>
+      <button class="btn sec sm" id="btnRefs">Referensi diklaim (${r.claimed_refs.length})</button></div>
+      <div class="readpane">${r.paragraphs.map(p=>`<p>${esc(p)}</p>`).join("")}</div>
+    </div>
+    <div class="card">
+      <div class="flexsb"><h3>Ground truth</h3>
+        <div class="seg" style="width:180px"><button id="gA" class="${gtMode==='ar'?'on2':''}">Arab</button><button id="gT" class="${gtMode==='tr'?'on2':''}">Terjemahan</button></div></div>
+      <div class="gtsel" id="gtsel">${DATA.ground_truth.map(g=>`<span class="chip ${g.id===curGT?'active':''}" data-gt="${g.id}">${esc(g.title.split(' — ')[0])}</span>`).join("")}</div>
+      <div class="small muted" style="margin-bottom:6px">${esc(gt.title)}</div>
+      <div class="readpane">${gtParas.map(p=>`<p class="${isAr(p)?'gt-ar':''}">${esc(p)}</p>`).join("")||'<p class="muted">—</p>'}</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="flexsb"><h3>Rubrik Kualitas (${RUB.length} dimensi · 0–2)</h3><span class="small muted">0 = tidak ada/salah · 1 = sebagian · 2 = lengkap/tepat · klik lagi untuk batal</span></div>
+    <div class="rubric-grid" id="rubGrid">${RUB.map(renderRubItem).join("")}</div>
+  </div>
+
+  <div class="card">
+    <h3>Tambah temuan error (kualitatif)</h3>
+    <div class="row">
+      <div class="field" style="flex:2"><label>Kategori error</label><select id="fCat">${catOpts}</select></div>
+      <div class="field" style="max-width:120px"><label>Severity</label><select id="fSev"><option value="">(default)</option><option>1</option><option>2</option><option>3</option></select></div>
+      <div class="field" style="max-width:170px"><label>Status</label><select id="fStat">${statusOpts}</select></div>
+      <div class="field" style="max-width:130px"><label>Koder</label><input type="text" id="fCoder" placeholder="Koder A"></div>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <div class="field" style="flex:2"><label>Kutipan bermasalah (verbatim)</label><textarea id="fQuote" placeholder="Tempel frasa persis dari respons…"></textarea></div>
+      <div class="field"><label>Cek sumber: Kitab / Jilid / Hlm</label><textarea id="fSrc" placeholder="mis. Ṭabarī tak menyebut haji di sini; cf. atsar 16876"></textarea></div>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <div class="field" style="flex:3"><label>Catatan</label><input type="text" id="fNote" placeholder="alasan / rujukan ground truth"></div>
+      <button class="btn" id="btnAdd">+ Tambah temuan</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="flexsb"><h3>Temuan untuk ${esc(r.run_id)} <span class="tag">${fs.length}</span></h3></div>
+    <table><thead><tr><th>#</th><th>Kategori</th><th>Pilar</th><th>Sev</th><th>Kutipan</th><th>Cek Sumber</th><th>Status</th><th>Koder</th><th>Catatan</th><th></th></tr></thead>
+    <tbody id="findBody">${fs.map(renderFindRow).join("")||`<tr><td colspan="10" class="muted">Belum ada temuan untuk respons ini.</td></tr>`}</tbody></table>
+  </div>`;
+
+  $("#selRun").onchange=e=>{curRun=e.target.value;renderKoding();};
+  $$("#gtsel .chip").forEach(c=>c.onclick=()=>{curGT=c.dataset.gt;renderKoding();});
+  $("#gA").onclick=()=>{gtMode="ar";renderKoding();}; $("#gT").onclick=()=>{gtMode="tr";renderKoding();};
+  $("#btnAdd").onclick=addFinding;
+  $("#btnAuto").onclick=()=>{autoCode(curRun);renderKoding();};
+  $("#btnAutoAll").onclick=()=>{if(confirm("Isi otomatis (heuristik) untuk semua 28 respons? Hasil AUTO lama diganti; temuan manual tetap aman.")){autoCodeAll();renderKoding();}};
+  $("#btnRefs").onclick=()=>{const h=r.claimed_refs.length?r.claimed_refs.map(x=>`<p class="small">${esc(x)}</p>`).join(""):"<p class='muted'>Model tidak mencantumkan daftar referensi terpisah.</p>";showModal(`Referensi diklaim — ${esc(r.run_id)}`,h);};
+  $$("#findBody [data-del]").forEach(b=>b.onclick=()=>{findings=findings.filter(f=>f.id!==b.dataset.del);save();renderKoding();});
+  $$("#rubGrid .seg button").forEach(b=>b.onclick=()=>{
+    const dim=b.dataset.dim, val=+b.dataset.v;
+    if(!rubric[curRun])rubric[curRun]={};
+    rubric[curRun][dim]=(rubric[curRun][dim]===val)?null:val;   // klik lagi = batal
+    save();renderKoding();
+  });
+}
+function renderRubItem(d){
+  const v=rubScores(curRun)[d.id];
+  const seg=[0,1,2].map(n=>`<button data-dim="${d.id}" data-v="${n}" class="${v===n?'on'+n:''}">${n}</button>`).join("");
+  return `<div class="rubric-item"><div class="nm">${esc(d.name)}</div><div class="ds">${esc(d.desc)}</div><div class="seg">${seg}</div></div>`;
+}
+function renderFindRow(f,i){
+  const c=catByName[f.category]||{}, sev=f.severity!=null?f.severity:c.severity;
+  return `<tr class="findrow"><td>${i+1}</td><td>${esc(f.category)} ${f.coder==='auto'?'<span class="autotag">AUTO</span>':''}</td>
+    <td><span class="pill ${c.pillar}">${c.pillar||""}</span></td><td>${sev??""}</td>
+    <td>${esc(f.quote)}</td><td>${esc(f.source)}</td><td>${esc(f.status)}</td><td>${esc(f.coder)}</td><td>${esc(f.note)}</td>
+    <td><button class="btn danger sm" data-del="${f.id}">✕</button></td></tr>`;
+}
+function addFinding(){
+  const q=$("#fQuote").value.trim();
+  if(!q){alert("Isi kutipan bermasalah dulu.");return;}
+  findings.push({id:"f"+Date.now()+Math.floor(Math.random()*1000),run_id:curRun,model:respByRun[curRun].model,
+    category:$("#fCat").value,severity:$("#fSev").value?+$("#fSev").value:null,status:$("#fStat").value,
+    coder:$("#fCoder").value.trim()||"manual",quote:q,source:$("#fSrc").value.trim(),note:$("#fNote").value.trim()});
+  save();renderKoding();
+}
+
+// ---------- TAB: Kuantitatif ----------
+function renderKuant(){
+  const live=findings.filter(f=>f.status!=="Tidak terbukti");
+  const byCat={},byPil={P1:0,P2:0,P3:0},byMod={};
+  DATA.taxonomy.categories.forEach(c=>byCat[c.name]=0); models.forEach(m=>byMod[m]=0);
+  live.forEach(f=>{byCat[f.category]=(byCat[f.category]||0)+1;const c=catByName[f.category];if(c)byPil[c.pillar]++;byMod[f.model]=(byMod[f.model]||0)+1;});
+  const maxCat=Math.max(1,...Object.values(byCat));
+
+  const catRows=DATA.taxonomy.categories.map(c=>{const v=byCat[c.name];
+    return `<tr><td>${esc(c.name)}</td><td><span class="pill ${c.pillar}">${c.pillar}</span></td><td style="width:42%"><div class="bar-track"><div class="bar" style="width:${v/maxCat*100}%;background:var(--${pcls(c.pillar)})"></div></div></td><td style="text-align:right;font-weight:700">${v}</td></tr>`;}).join("");
+
+  const modRows=models.map(m=>{const sc=modelScore(m),ql=modelQuality(m),cnt=byMod[m],rs=DATA.responses.filter(r=>r.model===m);
+    return `<tr><td><b>${esc(m)}</b></td><td>${rs.length}</td><td style="text-align:right">${cnt}</td>
+      <td style="width:24%"><div class="bar-track"><div class="bar" style="width:${sc}%;background:${scoreColor(sc)}"></div></div></td>
+      <td style="text-align:right"><span class="scorebadge sm" style="background:${scoreColor(sc)};color:#08151d">${sc}</span></td>
+      <td style="text-align:right"><span class="scorebadge sm" style="background:${ql==null?'var(--panel2)':scoreColor(ql)};color:${ql==null?'var(--mut)':'#08151d'}">${ql==null?'—':ql}</span></td></tr>`;}).join("");
+
+  const dimRows=RUB.map(d=>{const a=dimAvg(d.id);return `<tr><td>${esc(d.name)}</td><td style="width:50%"><div class="bar-track"><div class="bar" style="width:${a==null?0:a/2*100}%;background:${a==null?'var(--panel2)':scoreColor(a/2*100)}"></div></div></td><td style="text-align:right;font-weight:700">${a==null?'—':a+' / 2'}</td></tr>`;}).join("");
+
+  const respRows=DATA.responses.map(r=>{const sc=runScore(r.run_id),q=qualityScore(r.run_id),n=runFindings(r.run_id).length;
+    return `<tr><td>${esc(r.run_id)}</td><td>${esc(r.model)}</td><td>V${r.version}</td><td style="text-align:right">${n}</td>
+      <td style="text-align:right"><span class="scorebadge sm" style="background:${scoreColor(sc)};color:#08151d">${sc}</span></td>
+      <td style="text-align:right"><span class="scorebadge sm" style="background:${q==null?'var(--panel2)':scoreColor(q)};color:${q==null?'var(--mut)':'#08151d'}">${q==null?'—':q}</span></td></tr>`;}).join("");
+
+  $("#main").innerHTML=`
+  <div class="card">
+    <div class="flexsb"><h3>Papan skor per model</h3><span class="small muted">Indeks Akurasi = 100 − penalti×K · Skor Kualitas = rata-rata rubrik (0–2 → %)</span></div>
+    <table><thead><tr><th>Model</th><th>#Run</th><th style="text-align:right">#Temuan</th><th>Indeks (bar)</th><th style="text-align:right">Indeks Akurasi</th><th style="text-align:right">Skor Kualitas</th></tr></thead><tbody>${modRows}</tbody></table>
+  </div>
+  <div class="grid2">
+    <div class="card"><h3>Frekuensi per kategori error</h3><table><tbody>${catRows}</tbody></table></div>
+    <div class="card">
+      <h3>Frekuensi per pilar</h3>
+      <div class="kpi" style="margin-bottom:14px">${DATA.taxonomy.pillars.map(p=>`<div class="box"><div class="n" style="color:var(--${pcls(p.id)})">${byPil[p.id]}</div><div class="l">${p.id} ${esc(p.name)}</div></div>`).join("")}</div>
+      <h3 style="margin-top:6px">Parameter skor (boleh diubah)</h3>
+      <div class="row">
+        <div class="field"><label>Bobot P1</label><input type="text" id="wP1" value="${cfg.pillarWeight.P1}"></div>
+        <div class="field"><label>Bobot P2</label><input type="text" id="wP2" value="${cfg.pillarWeight.P2}"></div>
+        <div class="field"><label>Bobot P3</label><input type="text" id="wP3" value="${cfg.pillarWeight.P3}"></div>
+        <div class="field"><label>K (skala penalti)</label><input type="text" id="wK" value="${cfg.K}"></div>
+        <button class="btn" id="btnW">Terapkan</button>
+      </div>
+      <p class="small muted" style="margin-top:8px">Status "Tidak terbukti" = 0 · "Diragukan" = ½ · "Perlu cek ulang" = ¼ · "Terkonfirmasi" = 1.</p>
+    </div>
+  </div>
+  <div class="card"><h3>Rata-rata rubrik per dimensi (respons terisi)</h3><table><tbody>${dimRows}</tbody></table></div>
+  <div class="card"><h3>Skor per respons (28 run)</h3>
+    <table><thead><tr><th>Run ID</th><th>Model</th><th>Ver</th><th style="text-align:right">#Temuan</th><th style="text-align:right">Indeks</th><th style="text-align:right">Kualitas</th></tr></thead><tbody>${respRows}</tbody></table></div>`;
+  $("#btnW").onclick=()=>{cfg.pillarWeight.P1=+$("#wP1").value||0;cfg.pillarWeight.P2=+$("#wP2").value||0;cfg.pillarWeight.P3=+$("#wP3").value||0;cfg.K=+$("#wK").value||0;save();renderKuant();};
+}
+
+// ---------- TAB: Ekspor ----------
+function renderEkspor(){
+  $("#main").innerHTML=`
+  <div class="card"><h3>Auto-isi (heuristik)</h3>
+    <p class="muted small">Memindai tiap respons untuk sinyal jelas (klaim ijmāʿ, perluasan makna modern, rujukan jilid/halaman, ketiadaan sanad) lalu menandai kandidat temuan berstatus <b>"Perlu cek ulang"</b> + skor rubrik awal. <b>Wajib diverifikasi manual</b> — heuristik tidak menggantikan penilaian koder.</p>
+    <div class="row"><button class="btn gold" id="acAll">⚡ Isi otomatis semua respons (28)</button><button class="btn sec" id="acClear">Hapus hanya temuan AUTO</button></div>
+  </div>
+  <div class="card"><h3>Ekspor</h3>
+    <div class="row"><button class="btn" id="expJson">Temuan + Rubrik (JSON)</button><button class="btn sec" id="expCsv">Temuan (CSV)</button>
+    <button class="btn sec" id="expScore">Skor + Rubrik (CSV)</button></div>
+  </div>
+  <div class="card"><h3>Impor (JSON)</h3>
+    <p class="muted small">Tempel JSON hasil ekspor. Menerima format {findings, rubric} atau array temuan saja. Menimpa data saat ini.</p>
+    <textarea id="impArea" style="min-height:120px" placeholder='{"findings":[…],"rubric":{…}}'></textarea>
+    <div class="row" style="margin-top:8px"><button class="btn" id="impBtn">Impor &amp; timpa</button><button class="btn danger" id="clrBtn">Hapus SEMUA (temuan + rubrik)</button></div>
+  </div>
+  <div class="card"><h3>Catatan teknis</h3>
+    <p class="small muted">Teks respons, ground truth Arab + terjemahan tertanam di <code>index.html</code> (offline). Temuan &amp; rubrik tersimpan di localStorage browser. Dua koder: masing-masing ekspor JSON lalu gabungkan untuk hitung kesepakatan.</p>
+  </div>`;
+  $("#acAll").onclick=()=>{if(confirm("Isi otomatis 28 respons?")){autoCodeAll();alert("Selesai. Cek tab Koding/Kuantitatif.");}};
+  $("#acClear").onclick=()=>{findings=findings.filter(f=>f.coder!=="auto");save();alert("Temuan AUTO dihapus.");};
+  $("#expJson").onclick=()=>download("temuan_audit.json",JSON.stringify({findings,rubric},null,2));
+  $("#expCsv").onclick=()=>download("temuan_audit.csv",toCSV(findings.map(f=>{const c=catByName[f.category]||{};return{run_id:f.run_id,model:f.model,category:f.category,pillar:c.pillar||"",severity:f.severity??c.severity??"",status:f.status,coder:f.coder,quote:f.quote,source:f.source,note:f.note};})));
+  $("#expScore").onclick=()=>{const rows=DATA.responses.map(r=>{const o={run_id:r.run_id,model:r.model,version:r.version,n_temuan:runFindings(r.run_id).length,indeks_akurasi:runScore(r.run_id),skor_kualitas:qualityScore(r.run_id)??""};RUB.forEach(d=>o[d.id]=rubScores(r.run_id)[d.id]??"");return o;});download("skor_audit.csv",toCSV(rows));};
+  $("#impBtn").onclick=()=>{try{let a=JSON.parse($("#impArea").value);if(a&&a.findings){if(a.rubric)rubric=a.rubric;a=a.findings;}if(!Array.isArray(a))throw 0;findings=a;save();alert("Impor "+a.length+" temuan.");render();}catch(e){alert("JSON tidak valid.");}};
+  $("#clrBtn").onclick=()=>{if(confirm("Hapus semua temuan DAN rubrik?")){findings=[];rubric={};save();render();}};
+}
+function toCSV(arr){if(!arr.length)return"";const keys=Object.keys(arr[0]);const q=v=>'"'+String(v??"").replace(/"/g,'""')+'"';return keys.join(",")+"\n"+arr.map(o=>keys.map(k=>q(o[k])).join(",")).join("\n");}
+function download(name,txt){const b=new Blob([txt],{type:"text/plain;charset=utf-8"}),u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download=name;a.click();URL.revokeObjectURL(u);}
+
+// ---------- modal ----------
+function showModal(title,html){
+  const d=document.createElement("div");
+  d.style="position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px";
+  d.innerHTML=`<div class="card" style="max-width:680px;max-height:80vh;overflow:auto;margin:0"><div class="flexsb"><h3>${title}</h3><button class="btn sec sm" id="mX">Tutup</button></div>${html}</div>`;
+  d.onclick=e=>{if(e.target===d||e.target.id==="mX")d.remove();};
+  document.body.appendChild(d);
+}
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+# macOS / Google Drive junk
+.DS_Store
+~$*
+*.tmp
+
+# editor
+.vscode/
+.idea/
