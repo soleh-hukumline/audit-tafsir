@@ -312,7 +312,15 @@
     "Catatan rujukan halaman",
     "Lokus paling presisi dan tahan-edisi yang dapat saya pertanggungjawabkan adalah: (QS al-Tawbah [9]: 60) untuk ketiganya; nomor athar 16876–16878 pada al-Ṭabarī (edisi Shākir); dan masʾalah ke-22 pada al-Qurṭubī. Nomor halaman cetak berbeda antaredisi, sehingga saya menambatkan kutipan pada penanda-penanda itu alih-alih mengarang angka halaman. Bila edisi cetak yang Anda pakai disebutkan (mis. al-Ṭabarī edisi Shākir vs. al-Turkī; al-Qurṭubī Dār al-Kutub al-Miṣriyya 20 jilid), saya dapat memetakan nomor halaman persisnya."
    ],
-   "claimed_refs": []
+   "claimed_refs": [
+    "Sumber primer (tiga tafsir):",
+    "al-Ṭabarī, Abū Jaʿfar Muḥammad b. Jarīr (w. 310 H/923 M). Jāmiʿ al-Bayān ʿan Taʾwīl Āy al-Qurʾān. Tahkik Aḥmad Muḥammad Shākir & Maḥmūd Muḥammad Shākir, Dār al-Maʿārif, Kairo — Sūrat al-Tawbah pada jilid 14, athar no. 16876–16878 (di bawah QS [9]: 60). Edisi alternatif: tahkik ʿAbd Allāh b. ʿAbd al-Muḥsin al-Turkī, Dār Hajar, Kairo, 1422 H — al-Tawbah pada jilid 11.",
+    "Ibn Kathīr, Abū al-Fidāʾ Ismāʿīl b. ʿUmar (w. 774 H/1373 M). Tafsīr al-Qurʾān al-ʿAẓīm. Tahkik Sāmī b. Muḥammad al-Salāma, Dār Ṭayba, Riyadh, 1420 H/1999 M — Sūrat al-Tawbah pada jilid 4 (di bawah QS [9]: 60).",
+    "al-Qurṭubī, Abū ʿAbd Allāh Muḥammad b. Aḥmad (w. 671 H/1273 M). al-Jāmiʿ li-Aḥkām al-Qurʾān. Tahkik Aḥmad al-Bardūnī & Ibrāhīm Aṭfaysh, Dār al-Kutub al-Miṣriyya, Kairo, 1384 H/1964 M (20 jilid) — Sūrat al-Tawbah pada jilid 8, masʾalah ke-22 (di bawah QS [9]: 60).",
+    "Sumber pendukung (yang dirujuk dalam jawaban):",
+    "Abū Dāwūd al-Sijistānī. Sunan Abī Dāwūd, Kitāb al-Zakāt — hadis \"lā taḥillu al-ṣadaqatu li-ghaniyyin illā li-khamsa\", no. 1635–1636 (jilid 2, hlm. 158, sebagaimana dirujuk dalam apparatus editorial al-Ṭabarī edisi Shākir). Hadis ini menjadi sandaran bersama ketiga mufasir.",
+    "al-Baghawī, Abū Muḥammad al-Ḥusayn b. Masʿūd (w. 516 H). Maʿālim al-Tanzīl — di bawah QS al-Tawbah [9]: 60 (digunakan sebagai konteks lintas-mufasir mengenai tidak dibiayainya haji dari bagian ini menurut mayoritas ulama)."
+   ]
   },
   {
    "run_id": "CLAUDE-CoT-2",
@@ -366,7 +374,18 @@
     "Jilid (edisi standar yang saya yakini): Ibn Kathīr (Dār Ṭayba) → jilid 4; al-Qurṭubī (Dār al-Kutub al-Miṣriyyah, 20 jilid) → jilid 8. Untuk al-Ṭabarī, jilid bergantung edisi sehingga saya tidak mematoknya tanpa konfirmasi.",
     "Jika Anda memberi tahu edisi cetak persis yang Anda pakai (atau mengizinkan saya menarik dari satu PDF/maktabah digital tertentu), saya akan melengkapi nomor halaman tepat untuk tiap pernyataan dan menyusun ulang sitasi dalam format yang Anda kehendaki (mis. Chicago/Turabian atau Author-Date)."
    ],
-   "claimed_refs": []
+   "claimed_refs": [
+    "Sumber primer (tiga tafsir inti):",
+    "al-Ṭabarī, Abū Jaʿfar Muḥammad b. Jarīr. Jāmiʿ al-Bayān ʿan Taʾwīl Āy al-Qurʾān. Taḥqīq ʿAbd Allāh b. ʿAbd al-Muḥsin al-Turkī. Kairo: Dār Hajr / Markaz al-Buḥūth wa-al-Dirāsāt al-ʿArabiyyah wa-al-Islāmiyyah. (Tafsir QS al-Tawbah [9]: 60.)",
+    "Ibn Kathīr, Abū al-Fidāʾ Ismāʿīl b. ʿUmar. Tafsīr al-Qurʾān al-ʿAẓīm. Taḥqīq Sāmī b. Muḥammad Salāmah. Riyadh: Dār Ṭayba li-l-Nashr wa-al-Tawzīʿ, cet. ke-2, 1420 H/1999 M, jilid 4. (Tafsir QS al-Tawbah [9]: 60.)",
+    "al-Qurṭubī, Abū ʿAbd Allāh Muḥammad b. Aḥmad. al-Jāmiʿ li-Aḥkām al-Qurʾān. Taḥqīq Aḥmad al-Bardūnī & Ibrāhīm Aṭfaysh. Kairo: Dār al-Kutub al-Miṣriyyah, cet. ke-2, 1384 H/1964 M, jilid 8. (Tafsir QS al-Tawbah [9]: 60, al-masʾalah ke-22.)",
+    "Sumber penunjang yang dirujuk dalam jawaban:",
+    "al-Baghawī, Abū Muḥammad al-Ḥusayn b. Masʿūd. Maʿālim al-Tanzīl fī Tafsīr al-Qurʾān. (Untuk pandangan haji sebagai fī sabīlillāh dari Ibn ʿAbbās; QS al-Tawbah [9]: 60.)",
+    "al-Rāzī, Fakhr al-Dīn. Mafātīḥ al-Ghayb (al-Tafsīr al-Kabīr). (Untuk analisis lām al-tamlīk vs. partikel fī; QS al-Tawbah [9]: 60.)",
+    "Sumber hadis yang dikutip para mufasir:",
+    "Abū Dāwūd al-Sijistānī. al-Sunan, Kitāb al-Zakāt. (Hadis Abū Saʿīd al-Khudrī \"lā taḥillu al-ṣadaqa li-ghaniyy illā li-khamsa\"; serta riwayat Sahl b. Abī Ḥathma.)",
+    "Ibn Mājah, Abū ʿAbd Allāh Muḥammad b. Yazīd. al-Sunan, Kitāb al-Zakāt. (Hadis Abū Saʿīd al-Khudrī, sebagaimana dikutip Ibn Kathīr.)"
+   ]
   },
   {
    "run_id": "CLAUDE-CoT-3",
@@ -437,7 +456,11 @@
     "Rujukan presisi dan Daftar Pustaka",
     "Mengenai presisi halaman: sebagaimana saya tandai di awal, setiap pernyataan di atas saya tambatkan pada lema penafsiran QS al-Tawbah [9]: 60 dalam masing-masing kitab (untuk al-Ṭabarī sampai nomor athar), plus edisi dan jilid. Nomor halaman bergantung cetakan dan sengaja tidak saya karang. Sebutkan cetakan persis yang Anda gunakan (penerbit, tahun, jumlah jilid), dan saya isi nomor halamannya secara tepat."
    ],
-   "claimed_refs": []
+   "claimed_refs": [
+    "al-Ṭabarī, Abū Jaʿfar Muḥammad b. Jarīr (w. 310 H). Jāmiʿ al-Bayān ʿan Taʾwīl Āy al-Qurʾān. Taḥqīq: Aḥmad Muḥammad Shākir. Beirut: Muʾassasat al-Risālah. — Bagian: tafsir QS al-Tawbah [9]: 60 (rangkaian athar ±no. 16827 dst., termasuk athar Ibn Zayd: «الغازي في سبيل الله»). [Edisi banding: taḥqīq ʿAbd Allāh b. ʿAbd al-Muḥsin al-Turkī, Kairo: Dār Hajar, sūrat al-Tawbah.] Jilid/halaman: konfirmasi sesuai cetakan.",
+    "Ibn Kathīr, ʿImād al-Dīn Abū al-Fidāʾ Ismāʿīl b. ʿUmar (w. 774 H). Tafsīr al-Qurʾān al-ʿAẓīm. Taḥqīq: Sāmī b. Muḥammad Salāmah. Riyadh: Dār Ṭayyibah, cet. ke-2, 1420 H/1999 M. — Jilid 4, tafsir QS al-Tawbah [9]: 60 («الغزاة الذين لا حقّ لهم في الديوان… والحجّ من سبيل الله للحديث»). Halaman: konfirmasi sesuai cetakan.",
+    "al-Qurṭubī, Abū ʿAbd Allāh Muḥammad b. Aḥmad al-Anṣārī (w. 671 H). al-Jāmiʿ li-Aḥkām al-Qurʾān (Tafsīr al-Qurṭubī). Taḥqīq: Aḥmad al-Bardūnī & Ibrāhīm Aṭfayyish. Kairo: Dār al-Kutub al-Miṣriyyah, cet. ke-2, 1384 H/1964 M. — Jilid 8, tafsir QS al-Tawbah [9]: 60, al-masʾala al-thāniya wa al-ʿishrūn (fī sabīlillāh: «وهم الغزاة وموضع الرباط…»). Halaman: konfirmasi sesuai cetakan."
+   ]
   },
   {
    "run_id": "CLAUDE-CoT-4",
@@ -446,7 +469,7 @@
    "family": "Anthropic",
    "version": 4,
    "source_file": "Claude Opus 4.8 V4.docx",
-   "word_count": 1423,
+   "word_count": 1658,
    "paragraphs": [
     "Berikut uraian sistematis makna fī sabīlillāh dalam QS al-Tawbah [9]: 60 menurut pembacaan tafsīr bi al-maʾthūr pada tiga tafsir yang Anda tetapkan. Saya menelusuri langsung nas Arab ketiga kitab untuk memastikan riwayat, periwayat, dan letak teksnya; konvensi rujukan saya jelaskan di bagian akhir (penomoran athar/masألah dijadikan jangkar utama karena nomor halaman berbeda antaredisi).",
     "Konteks ayat dan kedudukan fī sabīlillāh",
@@ -495,9 +518,21 @@
     "Karakter metodologis:",
     "al-Ṭabarī: kumpulkan athar salaf lalu tarjīḥ sendiri (kerangka dua tujuan zakat) — mode mufasir-faqih klasik.",
     "Ibn Kathīr: ringkas, riwāyah-sentris, menonjolkan takhrīj dan satu pendapat minoritas (haji).",
-    "al-Qurṭubī: aḥkām/fiqh-sentris dalam format masāʾil, kaya khilaf madzhab dan rincian operasional."
+    "al-Qurṭubī: aḥkām/fiqh-sentris dalam format masāʾil, kaya khilaf madzhab dan rincian operasional.",
+    "4. Rujukan presisi dan daftar pustaka",
+    "Konvensi rujukan. Untuk tafsīr bi al-maʾthūr klasik, jangkar paling tepat dan tahan-edisi adalah letak ayat + penanda internal (nomor athar pada al-Ṭabarī; nomor masألah pada al-Qurṭubī), karena nomor jilid/halaman berubah antaredisi cetak. Di bawah ini saya cantumkan keduanya: penanda internal yang terverifikasi dari nas dan jilid pada edisi standar yang dirujuk. Catatan kejujuran: nomor halaman terikat pada edisi yang disebutkan; saya menganjurkan Anda mencocokkan halaman dengan eksemplar yang Anda pegang, sedangkan letak ayat + nomor athar/masألah membuat rujukan tetap dapat dilacak di edisi mana pun.",
+    "Letak per pernyataan:",
+    "al-Ṭabarī — makna fī sabīlillāh (\"ghazw al-kuffār\"), athar Ibn Zayd (16876), hadis Zayd b. Aslam→ʿAṭāʾ (16877), ʿAṭiyyah→Abū Saʿīd (16878), serta tarjīḥ dua-tujuan zakat: tafsir QS al-Tawbah: 60, Jāmiʿ al-Bayān, jilid 14 (cet. Muʾassasat al-Risālah, taḥqīq Aḥmad Shākir) / jilid 11 (cet. Dār Hajar, taḥqīq al-Turkī).",
+    "Ibn Kathīr — \"al-ghuzāt alladhīna lā ḥaqqa lahum fī al-dīwān\"; pandangan Aḥmad/al-Ḥasan/Isḥāq tentang haji; hadis Abū Saʿīd (Abū Dāwūd & Ibn Mājah) dan Abū Hurayrah (Aḥmad): tafsir QS al-Tawbah: 60, Tafsīr al-Qurʾān al-ʿAẓīm, jilid 4 (cet. Dār Ṭayyibah, taḥqīq Sāmī al-Salāmah).",
+    "al-Qurṭubī — fī sabīlillāh = al-ghuzāt + mawḍiʿ al-ribāṭ; perluasan Ibn ʿAbd al-Ḥakam; riwayat Ibn ʿUmar; hadis Sahl b. Abī Ḥathmah; ʿĪsā ibn Dīnār; peta madzhab: tafsir QS al-Tawbah: 60, al-masألah al-thāniyah wa al-ʿishrūn (ke-22), al-Jāmiʿ li-Aḥkām al-Qurʾān, jilid 8 (cet. Dār al-Kutub al-Miṣriyyah).",
+    "Catatan Ibn ʿĀshūr (pembanding): al-Taḥrīr wa al-Tanwīr, tafsir QS al-Tawbah: 60."
    ],
-   "claimed_refs": []
+   "claimed_refs": [
+    "al-Ṭabarī, Abū Jaʿfar Muḥammad ibn Jarīr. Jāmiʿ al-Bayān ʿan Taʾwīl Āy al-Qurʾān. Taḥqīq Aḥmad Muḥammad Shākir. Beirut: Muʾassasat al-Risālah, 1420 H/2000 M, 24 jilid — jilid 14 (tafsir QS al-Tawbah: 60; athar no. 16876–16878). Edisi alternatif: taḥqīq ʿAbd Allāh ibn ʿAbd al-Muḥsin al-Turkī, Kairo: Dār Hajar, cet. 1, 1422 H, 26 jilid — jilid 11.",
+    "Ibn Kathīr, Abū al-Fidāʾ Ismāʿīl ibn ʿUmar. Tafsīr al-Qurʾān al-ʿAẓīm. Taḥqīq Sāmī ibn Muḥammad al-Salāmah. Riyadh: Dār Ṭayyibah, cet. 2, 1420 H/1999 M, 8 jilid — jilid 4 (tafsir QS al-Tawbah: 60).",
+    "al-Qurṭubī, Abū ʿAbd Allāh Muḥammad ibn Aḥmad. al-Jāmiʿ li-Aḥkām al-Qurʾān. Taḥqīq Aḥmad al-Bardūnī & Ibrāhīm Aṭfaysh. Kairo: Dār al-Kutub al-Miṣriyyah, cet. 2, 1384 H/1964 M, 20 jilid — jilid 8 (tafsir QS al-Tawbah: 60, masألah ke-22).",
+    "Ibn ʿĀshūr, Muḥammad al-Ṭāhir. al-Taḥrīr wa al-Tanwīr. Tunis: al-Dār al-Tūnisiyyah li-l-Nashr — tafsir QS al-Tawbah: 60 (rujukan pembanding untuk pembacaan atas al-Qurṭubī)."
+   ]
   },
   {
    "run_id": "DEEPSEEK-CoT-1",
@@ -551,7 +586,11 @@
     "Sikap Terhadap Riwayat Haji. Al-Ṭabarī sama sekali tidak menyinggung kemungkinan haji masuk dalam kategori ini. Ibn Kathīr menyebutkan secara singkat bahwa ada yang berpendapat demikian tetapi tidak menguatkannya. Sementara al-Qurṭubī memberikan ruang penjelasan yang proporsional terhadap pendapat tersebut dan mengutip praktik Ibn ʿAbbās serta mazhab Aḥmad ibn Ḥanbal, lalu menyelaraskannya dengan kaidah syariat.",
     "Pendekatan Tafsir. Al-Ṭabarī menggunakan metode tafsīr bi al-maʾthūr secara ketat dengan mendata seluruh riwayat tanpa melakukan tarjih yang memunculkan pengecualian. Ibn Kathīr langsung menyaring dengan hadis sehingga pandangannya lebih ringkas. Al-Qurṭubī sebagai mufasir hukum menguraikan perbedaan pendapat ulama, menyebutkan argumentasi masing-masing, dan memberi solusi hukum yang lebih fleksibel dalam batas-batas tertentu."
    ],
-   "claimed_refs": []
+   "claimed_refs": [
+    "Al-Ṭabarī, Abū Jaʿfar Muḥammad ibn Jarīr. Jāmiʿ al-Bayān ʿan Taʾwīl Āy al-Qurʾān. Ed. Maḥmūd Muḥammad Shākir. Dār al-Maʿārif, 1407 H. Jilid 14, halaman 315–319.",
+    "Ibn Kathīr, Abū al-Fidāʾ Ismāʿīl ibn ʿUmar. Tafsīr al-Qurʾān al-ʿAẓīm. Ed. Sāmī ibn Muḥammad al-Salāmah. Dār Ṭaybah, 1420 H. Jilid 4, halaman 145–146.",
+    "Al-Qurṭubī, Abū ʿAbd Allāh Muḥammad ibn Aḥmad. al-Jāmiʿ li-Aḥkām al-Qurʾān. Ed. ʿAbd Allāh ibn ʿAbd al-Muḥsin al-Turkī. Muʾassasat al-Risālah, 1427 H. Jilid 8, halaman 238–240."
+   ]
   },
   {
    "run_id": "DEEPSEEK-CoT-2",
@@ -618,7 +657,11 @@
     "Cakupan Diskusi: Al-Qurṭubī lebih panjang-lebar membahas pendapat alternatif (khususnya dari mazhab Māliki) yang memperluas makna fī sabīlillāh ke seluruh bentuk amal kebaikan. Al-Ṭabarī dan Ibn Kathīr lebih ringkas dan langsung menetapkan makna jihad tanpa memberi banyak ruang pada pendapat lain.",
     "Sikap terhadap Perluasan Makna: Al-Ṭabarī secara metodologis menganggap riwayat perluasan sebagai lemah sanad dan bertentangan dengan kesepakatan sahabat. Ibn Kathīr mengikutinya dan menolak keabsahan takwil yang meluas. Al-Qurṭubī, meski menguatkan pendapat jumhur, masih mengakomodasi pendapat Mālik dan Ibnu ʿUmar sebagai wacana fikih yang hidup di kalangan tabiin dan salaf, sehingga pendekatannya lebih komparatif."
    ],
-   "claimed_refs": []
+   "claimed_refs": [
+    "Al-Ṭabarī, Abū Jaʿfar Muḥammad ibn Jarīr. Jāmiʿ al-Bayān ʿan Taʾwīl Āy al-Qurʾān. Jilid 14. Kairo: Dār Hajr, 2001. Hlm. 316–318.",
+    "Ibn Kathīr, Abū al-Fidāʾ Ismāʿīl. Tafsīr al-Qurʾān al-ʿAẓīm. Jilid 4. Riyāḍ: Dār al-Salām, 2003. Hlm. 131–134.",
+    "Al-Qurṭubī, Abū ʿAbdillāh Muḥammad ibn Aḥmad. al-Jāmiʿ li-Aḥkām al-Qurʾān. Jilid 8. Kairo: Dār al-Kutub al-Miṣriyyah, 1964. Hlm. 184–189."
+   ]
   },
   {
    "run_id": "DEEPSEEK-CoT-3",
@@ -627,7 +670,7 @@
    "family": "DeepSeek",
    "version": 3,
    "source_file": "DeepSeek V3.docx",
-   "word_count": 781,
+   "word_count": 858,
    "paragraphs": [
     "Berikut uraian langkah demi langkah penafsiran frasa fī sabīlillāh dalam QS al-Tawbah [9]: 60 berdasarkan metode tafsīr bi al-maʾthūr melalui tiga kitab tafsir utama.",
     "Konteks Ayat dan Kedudukan Fī Sabīlillāh",
@@ -679,9 +722,17 @@
     "Penekanan Khas",
     "Metode tarjīḥ atas riwayat yang beragam",
     "Fokus pada validitas hadis dan makna tekstual",
-    "Perbedaan pendapat fikih antar mazhab dan implikasi hukumnya"
+    "Perbedaan pendapat fikih antar mazhab dan implikasi hukumnya",
+    "4. Rujukan Kitab",
+    "Al-Ṭabarī, Abū Jaʿfar Muḥammad ibn Jarīr. Jāmiʿ al-Bayān ʿan Taʾwīl āy al-Qurʾān. Ed. Maḥmūd Muḥammad Shākir. Kairo: Maktabah Ibn Taymiyyah, t.th. Jilid 10, hlm. 112–115.",
+    "Ibn Kathīr, Abū al-Fidāʾ Ismāʿīl ibn ʿUmar. Tafsīr al-Qurʾān al-ʿAẓīm. Ed. Sāmī ibn Muḥammad Salāmah. Riyadh: Dār Ṭayyibah, 1999. Jilid 4, hlm. 151.",
+    "Al-Qurṭubī, Abū ʿAbd Allāh Muḥammad ibn Aḥmad. al-Jāmiʿ li-Aḥkām al-Qurʾān wa-al-Mubayyin li-mā Taḍammanahu min al-Sunnah wa-Āy al-Furqān. Kairo: Dār al-Kutub al-Miṣriyyah, 1964. Jilid 8, hlm. 180–182."
    ],
-   "claimed_refs": []
+   "claimed_refs": [
+    "Al-Qurṭubī, Abū ʿAbd Allāh Muḥammad ibn Aḥmad. al-Jāmiʿ li-Aḥkām al-Qurʾān wa-al-Mubayyin li-mā Taḍammanahu min al-Sunnah wa-Āy al-Furqān. Jilid 8. Kairo: Dār al-Kutub al-Miṣriyyah, 1964.",
+    "Al-Ṭabarī, Abū Jaʿfar Muḥammad ibn Jarīr. Jāmiʿ al-Bayān ʿan Taʾwīl āy al-Qurʾān. Jilid 10. Ed. Maḥmūd Muḥammad Shākir. Kairo: Maktabah Ibn Taymiyyah, t.th.",
+    "Ibn Kathīr, Abū al-Fidāʾ Ismāʿīl ibn ʿUmar. Tafsīr al-Qurʾān al-ʿAẓīm. Jilid 4. Ed. Sāmī ibn Muḥammad Salāmah. Riyadh: Dār Ṭayyibah, 1999."
+   ]
   },
   {
    "run_id": "DEEPSEEK-CoT-4",
@@ -690,7 +741,7 @@
    "family": "DeepSeek",
    "version": 4,
    "source_file": "DeepSeek V4.docx",
-   "word_count": 1600,
+   "word_count": 3203,
    "paragraphs": [
     "Konteks Ayat dan Kedudukan Fī Sabīlillāh",
     "Ayat QS al-Tawbah [9]: 60 merupakan satu-satunya ayat dalam Al-Qur’an yang secara eksplisit merinci golongan-golongan penerima zakat (mustaḥiqqūn). Allah ﷻ berfirman:",
@@ -758,6 +809,73 @@
     "Ibn Kathīr lebih ringkas dan selektif dalam mengutip riwayat. Tekanannya pada mengonfirmasi pendapat jumhur dan menghubungkannya dengan amaliah salaf.",
     "Al-Qurṭubī berfokus pada implikasi hukum fikih. Selain riwayat, ia juga membahas syarat-syarat penerima, mekanisme penyaluran, dan implikasi perbedaan pendapat terhadap praktik zakat. Tekanannya sangat fiqh-oriented.",
     "Argumentasi penolakan perluasan.",
+    "Al-Ṭabarī dan al-Qurṭubī menggunakan argumen yang sama secara substantif: spesifikasi delapan golongan oleh Allah tidak akan bermakna jika fī sabīlillāh ditafsirkan secara terlalu luas. Namun, al-Qurṭubī mengembangkannya lebih jauh dengan analisis kebahasaan dan konteks syariat. Ibn Kathīr tidak mengembangkan argumen ini secara eksplisit.",
+    "1. Konteks Ayat dan Kedudukan Fī Sabīlillāh",
+    "Ayat QS al-Tawbah [9]: 60 merupakan satu-satunya ayat dalam Al-Qur’an yang secara eksplisit merinci golongan-golongan penerima zakat (mustaḥiqqūn). Allah ﷻ berfirman:",
+    "\"Sesungguhnya zakat-zakat itu, hanyalah untuk orang-orang fakir, orang-orang miskin, para pengurus zakat (ʿāmilīn), para muallaf yang dipersatukan hatinya, untuk (memerdekakan) budak (riqāb), orang-orang yang terlilit utang (ghārimīn), (orang-orang yang berjuang) di jalan Allah (fī sabīlillāh), dan orang-orang yang sedang dalam perjalanan (ibn al-sabīl) sebagai suatu ketetapan yang diwajibkan Allah. Dan Allah Maha Mengetahui lagi Maha Bijaksana.\" (QS al-Tawbah [9]: 60)",
+    "Ayat ini, menurut riwayat yang dikutip al-Ṭabarī dari al-Suddī dan Ibn Zayd, turun untuk mencegah orang-orang munafik yang mencela Nabi ﷺ dalam pembagian sedekah, dengan menegaskan bahwa kewenangan pembagian zakat sepenuhnya milik Allah, bukan manusia (al-Ṭabarī, Jāmiʿ al-Bayān, ed. Muḥammad Shākir, jilid 14, hlm. 303–305). Al-Qurṭubī menegaskan bahwa ayat ini menutup pintu ijtihad dalam penentuan golongan penerima zakat—hanya delapan golongan ini yang berhak, dan lam dalam ayat ini berfungsi sebagai lām al-tamlīk (kepemilikan) (al-Qurṭubī, al-Jāmiʿ li-Aḥkām al-Qurʾān, ed. al-Bardūnī, jilid 8, hlm. 169).",
+    "Fī sabīlillāh adalah golongan ketujuh dari delapan aṣnāf. Secara harfiah, frasa ini berarti \"di jalan Allah\"—sebuah ungkapan luas yang dalam Al-Qur’an sering merujuk pada jihad dan pengorbanan harta untuk menegakkan agama. Ayat ini menjadi dasar teologis dan hukum bagi alokasi dana zakat untuk jihad, namun cakupannya menjadi medan perbedaan pendapat di kalangan mufasir bi al-maʾthūr: apakah ia terbatas pada para pejuang (ghuzāt), atau mencakup seluruh bentuk ketaatan dan kemaslahatan umum?",
+    "2. Tafsir Masing-Masing Mufasir",
+    "A. Al-Ṭabarī (w. 310 H) – Jāmiʿ al-Bayān ʿan Taʾwīl Āy al-Qurʾān",
+    "Al-Ṭabarī memulai penafsirannya dengan metode khasnya: memaparkan keragaman riwayat, lalu mentarjih pendapat terkuat. Ia menulis:",
+    "\"Adapun firman-Nya: wa fī sabīlillāh, maka sesungguhnya para ahli takwil berbeda pendapat tentang maknanya. Sebagian berkata: Mereka adalah para pejuang (ghuzāt) di jalan Allah.\" (al-Ṭabarī, Jāmiʿ al-Bayān, jilid 14, hlm. 314)",
+    "Ia mengutip sejumlah athar yang membatasi maknanya pada ghuzāt (para pejuang):",
+    "Dari Qatādah (tabiin, w. 117 H): \"Fī sabīlillāh adalah para pejuang (al-ghuzāt).\" (al-Ṭabarī, Jāmiʿ al-Bayān, jilid 14, hlm. 314, no. riwayat 16840)",
+    "Dari Mujāhid (tabiin, w. 104 H): \"Fī sabīlillāh: yaitu para pejuang dan orang-orang yang berjaga di perbatasan (al-murābiṭūn).\" (al-Ṭabarī, Jāmiʿ al-Bayān, jilid 14, hlm. 315, no. riwayat 16842)",
+    "Dari al-Ḍaḥḥāk (tabiin, w. 105 H): \"Mereka adalah para pejuang di jalan Allah (ghuzāt fī sabīlillāh).\" (al-Ṭabarī, Jāmiʿ al-Bayān, jilid 14, hlm. 315, no. riwayat 16843)",
+    "Al-Ṭabarī juga mencatat riwayat yang memperluas makna fī sabīlillāh:",
+    "Dari Ibn ʿUmar (sahabat, w. 73 H): “Haji termasuk fī sabīlillāh.” (al-Ṭabarī, Jāmiʿ al-Bayān, jilid 14, hlm. 315, no. riwayat 16846)",
+    "Dari Ibn ʿAbbās (sahabat, w. 68 H): Mengizinkan zakat untuk membebaskan budak dan untuk haji. (al-Ṭabarī, Jāmiʿ al-Bayān, jilid 14, hlm. 318–320)",
+    "Setelah memaparkan seluruh riwayat, al-Ṭabarī mentarjih pendapat yang membatasi pada ghuzāt:",
+    "\"Pendapat yang paling benar dalam hal itu menurut kami adalah pendapat yang mengatakan: fī sabīlillāh adalah para pejuang yang tidak memiliki hak tetap dalam dīwān (daftar penerima tunjangan resmi dari baitul mal).\" (al-Ṭabarī, Jāmiʿ al-Bayān, jilid 14, hlm. 321)",
+    "Kesimpulannya: Fī sabīlillāh adalah para pejuang sukarelawan (mutaṭawwiʿah) yang tidak terdaftar sebagai penerima gaji tetap negara. Mereka berhak mendapat zakat untuk bekal, senjata, dan kebutuhan jihad, bahkan jika mereka orang kaya di negeri asalnya. Adapun perluasan makna ke haji atau kebaikan umum, menurut al-Ṭabarī, bertentangan dengan makna dominan dalam bahasa Arab dan konteks syariat yang membatasi delapan golongan ini secara spesifik.",
+    "B. Ibn Kathīr (w. 774 H) – Tafsīr al-Qurʾān al-ʿAẓīm",
+    "Ibn Kathīr, yang metodologinya sangat dipengaruhi al-Ṭabarī namun dengan pendekatan lebih ringkas, menyatakan:",
+    "\"Adapun fī sabīlillāh, maka mereka adalah para pejuang (al-ghuzāt) yang tidak memiliki hak dalam dīwān (tunjangan tetap).\" (Ibn Kathīr, Tafsīr al-Qurʾān al-ʿAẓīm, ed. Sāmī al-Salāmah, jilid 4, hlm. 169)",
+    "Ia mengutip riwayat-riwayat yang mendukung batasan ini:",
+    "Dari Mujāhid: \"Fī sabīlillāh: para pejuang dan orang-orang yang berjaga di perbatasan (al-murābiṭūn).\" (Ibn Kathīr, Tafsīr al-Qurʾān al-ʿAẓīm, jilid 4, hlm. 169)",
+    "Dari al-Ḍaḥḥāk: \"Para pejuang di jalan Allah.\" (Ibn Kathīr, Tafsīr al-Qurʾān al-ʿAẓīm, jilid 4, hlm. 169)",
+    "Dari al-Awzāʿī (tabi‘ al-tabi‘in, w. 157 H): Menyatakan bahwa fī sabīlillāh adalah para pejuang. (Ibn Kathīr, Tafsīr al-Qurʾān al-ʿAẓīm, jilid 4, hlm. 169)",
+    "Ibn Kathīr kemudian mencatat adanya perluasan makna:",
+    "\"Diriwayatkan dari Imam Aḥmad, ia berkata: 'Haji termasuk fī sabīlillāh,' yaitu dalam konteks zakat, berdasarkan hadis yang diriwayatkan dari Ibn ʿAbbās.\" (Ibn Kathīr, Tafsīr al-Qurʾān al-ʿAẓīm, jilid 4, hlm. 170)",
+    "Riwayat Ibn ʿAbbās yang dimaksud adalah bahwa ia mengizinkan seseorang mengeluarkan zakat untuk membiayai haji orang lain, dan menganggap haji sebagai bagian dari fī sabīlillāh. Ibn Kathīr menyebutkan:",
+    "\"Ibn ʿAbbās berkata: 'Tidak mengapa engkau memberikan zakatmu untuk (membiayai) haji.'\" (Ibn Kathīr, Tafsīr al-Qurʾān al-ʿAẓīm, jilid 4, hlm. 170)",
+    "Namun, Ibn Kathīr tidak secara eksplisit mentarjih pendapat ini sebagai pendapat utama. Ia lebih cenderung mengikuti jumhur yang membatasi pada ghuzāt:",
+    "\"Pendapat yang masyhur dari jumhur ulama adalah bahwa fī sabīlillāh adalah para pejuang.\" (Ibn Kathīr, Tafsīr al-Qurʾān al-ʿAẓīm, jilid 4, hlm. 169)",
+    "Kesimpulannya: Ibn Kathīr mengafirmasi pendapat jumhur bahwa fī sabīlillāh adalah para pejuang yang tidak mendapat tunjangan tetap dari baitul mal. Ia mencatat pengecualian dari Imam Aḥmad dan Ibn ʿAbbās tentang haji, tetapi tidak menjadikannya sebagai pendapat yang dominan. Dengan demikian, ia selaras dengan al-Ṭabarī dalam tarjih, namun memberi ruang lebih eksplisit bagi perluasan yang diriwayatkan dari salaf.",
+    "C. Al-Qurṭubī (w. 671 H) – al-Jāmiʿ li-Aḥkām al-Qurʾān",
+    "Sebagai mufasir hukum, al-Qurṭubī memberikan pembahasan paling ekstensif dan mencakup dimensi fikih yang detail. Ia membuka dengan pernyataan:",
+    "\"Adapun sabīl Allāh, maka para ulama berbeda pendapat tentangnya. Jumhur (mayoritas) ulama berpendapat bahwa mereka adalah para pejuang (al-ghuzāt).\" (al-Qurṭubī, al-Jāmiʿ li-Aḥkām al-Qurʾān, jilid 8, hlm. 180)",
+    "Ia mengutip riwayat-riwayat yang mendukung pendapat jumhur:",
+    "Dari Qatādah: \"Fī sabīlillāh: al-ghuzāt.\" (al-Qurṭubī, al-Jāmiʿ, jilid 8, hlm. 180)",
+    "Dari Mujāhid: \"Mereka adalah para pejuang dan orang-orang yang berjaga di perbatasan (al-murābiṭūn).\" (al-Qurṭubī, al-Jāmiʿ, jilid 8, hlm. 180)",
+    "Dari al-Ḍaḥḥāk: \"Mereka adalah para pejuang di jalan Allah.\" (al-Qurṭubī, al-Jāmiʿ, jilid 8, hlm. 180)",
+    "Al-Qurṭubī kemudian merinci pendapat-pendapat yang memperluas cakupan fī sabīlillāh:",
+    "Pendapat Ibn ʿUmar dan Ibn ʿAbbās: Memasukkan haji sebagai fī sabīlillāh. Al-Qurṭubī mengutip:",
+    "\"Diriwayatkan dari Ibn ʿUmar dan Ibn ʿAbbās bahwa keduanya berkata: 'Haji termasuk fī sabīlillāh.'\" (al-Qurṭubī, al-Jāmiʿ, jilid 8, hlm. 181)",
+    "Pendapat Aḥmad bin Ḥanbal: Membolehkan zakat untuk haji, dan ini juga pendapat Isḥāq bin Rāhawayh. (al-Qurṭubī, al-Jāmiʿ, jilid 8, hlm. 181)",
+    "Pendapat yang memperluas ke seluruh jalan kebaikan (wujūh al-birr): Sebagian ulama, seperti al-Qāsim dan al-Kisāʾī, berpendapat bahwa fī sabīlillāh mencakup semua jalan kebaikan—mulai dari membangun masjid, jembatan, mengurus jenazah, hingga menyediakan air minum. Al-Qurṭubī menolak perluasan ini dengan tegas:",
+    "\"Ini adalah pendapat yang lemah (daʿīf). Seandainya semua jalan kebaikan termasuk fī sabīlillāh, niscaya penyebutan tujuh golongan lainnya menjadi sia-sia, karena fī sabīlillāh akan mencakup semuanya. Pembatasan oleh Allah atas delapan golongan menunjukkan bahwa masing-masing memiliki spesifikasi tersendiri.\" (al-Qurṭubī, al-Jāmiʿ, jilid 8, hlm. 182)",
+    "Al-Qurṭubī juga membahas secara detail syarat-syarat penerima zakat dari golongan fī sabīlillāh:",
+    "Mereka adalah para pejuang sukarelawan (mutaṭawwiʿah), bukan tentara reguler yang sudah mendapat gaji dari baitul mal.",
+    "Zakat dapat diberikan untuk membeli senjata, kuda, dan bekal jihad.",
+    "Seorang pejuang tetap berhak menerima zakat meskipun ia kaya di negerinya, karena kebutuhan jihad bersifat mendesak dan terpisah dari kekayaan pribadi. (al-Qurṭubī, al-Jāmiʿ, jilid 8, hlm. 183–184)",
+    "Kesimpulannya: Al-Qurṭubī secara tegas memilih pendapat jumhur yang membatasi fī sabīlillāh pada ghuzāt (para pejuang sukarelawan). Ia membantah perluasan makna ke seluruh jalan kebaikan dengan argumen linguistik dan kontekstual yang kuat. Meskipun ia mencatat pendapat Ibn ʿUmar dan Ibn ʿAbbās tentang haji, ia tidak menjadikannya sebagai pendapat yang dominan dalam mazhab hukum yang ia bela.",
+    "3. Perbandingan Ketiga Tafsir",
+    "Titik Kesepakatan (Ittifāq)",
+    "Makna dasar fī sabīlillāh adalah para pejuang (ghuzāt). Ketiga mufasir sepakat bahwa makna paling otentik berdasarkan riwayat salaf adalah para pejuang di jalan Allah. Mereka semua mengutip riwayat dari Qatādah, Mujāhid, dan al-Ḍaḥḥāk yang secara eksplisit menafsirkan demikian.",
+    "Penerima adalah pejuang sukarelawan. Ketiganya membedakan antara tentara reguler yang telah terdaftar dalam dīwān (daftar penerima gaji tetap negara) dengan pejuang sukarelawan (mutaṭawwiʿah). Hanya kelompok kedua yang berhak menerima zakat. Al-Ṭabarī dan al-Qurṭubī secara eksplisit menekankan syarat ini; Ibn Kathīr mengutipnya tanpa perbedaan.",
+    "Kekayaan tidak menghalangi. Seorang pejuang sukarelawan tetap berhak menerima zakat meskipun ia kaya di negeri asalnya, karena zakat di sini bukan untuk menutupi kemiskinan, melainkan untuk memenuhi kebutuhan jihad yang mendesak. Ini ditegaskan oleh al-Ṭabarī dan al-Qurṭubī, dan diisyaratkan oleh Ibn Kathīr.",
+    "Titik Perbedaan (Ikhtilāf)",
+    "Cakupan perluasan makna.",
+    "Al-Ṭabarī mencatat perluasan ke haji, tetapi secara eksplisit mentarjih pendapat yang membatasi pada ghuzāt. Ia menolak perluasan lebih lanjut ke seluruh kebaikan dengan argumen bahwa penyebutan delapan golongan secara spesifik tidak akan bermakna jika fī sabīlillāh mencakup semuanya.",
+    "Ibn Kathīr lebih terbuka terhadap perluasan. Ia mengutip pendapat Imam Aḥmad dan Ibn ʿAbbās tentang haji sebagai bagian dari fī sabīlillāh tanpa menolaknya secara tegas, meskipun ia tetap menyatakan bahwa pendapat masyhur adalah pembatasan pada ghuzāt.",
+    "Al-Qurṭubī memberikan analisis paling komprehensif. Ia mencatat pendapat yang memperluas ke haji dan bahkan ke semua jalan kebaikan, tetapi secara eksplisit dan tegas menolak perluasan ke seluruh kebaikan dengan argumen linguistik dan logis yang kuat. Ia menyebut perluasan tersebut sebagai pendapat yang lemah.",
+    "Metode penyajian dan penekanan.",
+    "Al-Ṭabarī menggunakan metode tafsīr bi al-maʾthūr dengan pendekatan ikhbārī (melaporkan riwayat secara lengkap), lalu mentarjih di akhir. Tekanannya pada penyajian seluruh spektrum riwayat dan kritik sanad.",
+    "Ibn Kathīr lebih ringkas dan selektif dalam mengutip riwayat. Tekanannya pada mengonfirmasi pendapat jumhur dan menghubungkannya dengan amaliah salaf.",
+    "Al-Qurṭubī berfokus pada implikasi hukum fikih. Selain riwayat, ia juga membahas syarat-syarat penerima, mekanisme penyaluran, dan implikasi perbedaan pendapat terhadap praktik zakat. Tekanannya sangat fiqh-oriented.",
+    "Argumentasi penolakan perluasan.",
     "Al-Ṭabarī dan al-Qurṭubī menggunakan argumen yang sama secara substantif: spesifikasi delapan golongan oleh Allah tidak akan bermakna jika fī sabīlillāh ditafsirkan secara terlalu luas. Namun, al-Qurṭubī mengembangkannya lebih jauh dengan analisis kebahasaan dan konteks syariat. Ibn Kathīr tidak mengembangkan argumen ini secara eksplisit."
    ],
    "claimed_refs": []
@@ -801,7 +919,11 @@
     "Perbedaannya terletak pada keluasan pembahasan. Al-Ṭabarī paling tegas membatasi makna pada pembiayaan perang melawan musuh Allah, lalu mendukungnya dengan atsar Ibn Zayd dan hadis pengecualian bagi orang kaya. Ibn Kathīr tetap menjadikan ghuzāt sebagai makna utama, tetapi menyebut pendapat bahwa haji termasuk sabīlillāh. Al-Qurṭubī memberi pembahasan fikih paling luas: ia menyebut ghuzāt dan ribāṭ sebagai pendapat mayoritas, mengutip pendapat haji/umrah dari Ibn ʿUmar, serta membahas perlengkapan perang dan status orang kaya yang ikut perang. Rujukan: al-Ṭabarī, jld. 14, hlm. 319–320; Ibn Kathīr, jld. 4, hlm. 169–170; al-Qurṭubī, jld. 8, hlm. 111–113.",
     "Dengan demikian, menurut metode tafsīr bi al-maʾthūr pada tiga tafsir tersebut, makna yang paling kuat dan paling berulang untuk fī sabīlillāh adalah orang yang berjuang/berperang di jalan Allah dan pembiayaan yang menunjang jihad/ribāṭ. Perluasan kepada haji/umrah ada dalam sebagian riwayat dan pendapat ulama, tetapi tidak menghapus makna dominan tersebut."
    ],
-   "claimed_refs": []
+   "claimed_refs": [
+    "Al-Ṭabarī, Abū Jaʿfar Muḥammad b. Jarīr. Jāmiʿ al-Bayān ʿan Taʾwīl Āy al-Qurʾān. Jilid 14, hlm. 305, 316, 319–320.",
+    "Ibn Kathīr, Abū al-Fidāʾ Ismāʿīl b. ʿUmar. Tafsīr al-Qurʾān al-ʿAẓīm. Jilid 4, hlm. 165, 169–170.",
+    "Al-Qurṭubī, Abū ʿAbd Allāh Muḥammad b. Aḥmad. al-Jāmiʿ li-Aḥkām al-Qurʾān. Jilid 8, hlm. 95–96, 111–113."
+   ]
   },
   {
    "run_id": "GPT-CoT-2",
@@ -881,7 +1003,11 @@
     "Berdasarkan metode tafsīr bi al-maʾthūr pada tiga tafsir klasik tersebut, frasa fī sabīlillāh dalam QS al-Tawbah [9]: 60 terutama berarti orang yang berjuang di jalan Allah dalam konteks jihad/ghazw serta kebutuhan pembiayaannya. Al-Ṭabarī menegaskan makna ini secara paling eksplisit. Ibn Kathīr mengikuti makna tersebut dengan tambahan catatan tentang haji menurut sebagian ulama. Al-Qurṭubī juga menjadikan ghuzāt dan ribāṭ sebagai makna utama, tetapi mengumpulkan lebih banyak pendapat fikih yang memasukkan haji, umrah, alat perang, dan kebutuhan pertahanan.",
     "Dengan demikian, dalam tiga tafsir ini, fī sabīlillāh tidak secara langsung dimaknai sebagai semua kegiatan kebaikan secara umum, tetapi sebagai pos zakat yang secara riwayat dan tafsir klasik terutama terkait dengan jihad, pertahanan agama, dan dalam sebagian riwayat: haji/umrah."
    ],
-   "claimed_refs": []
+   "claimed_refs": [
+    "al-Ṭabarī, Abū Jaʿfar Muḥammad ibn Jarīr. Jāmiʿ al-Bayān ʿan Taʾwīl Āy al-Qurʾān. Jilid 14, hlm. 305, 319–320, 322–323.",
+    "Ibn Kathīr, Ismāʿīl ibn ʿUmar. Tafsīr al-Qurʾān al-ʿAẓīm. Jilid 4, hlm. 165, 169–170.",
+    "al-Qurṭubī, Abū ʿAbd Allāh Muḥammad ibn Aḥmad. al-Jāmiʿ li-Aḥkām al-Qurʾān. Jilid 8, hlm. 95–96, 111–112, 118."
+   ]
   },
   {
    "run_id": "GPT-CoT-3",
@@ -961,7 +1087,11 @@
     "Perbedaannya terletak pada keluasan cakupan. Al-Ṭabarī paling ketat: fī sabīlillāh diarahkan kepada al-ghāzī dan pembiayaan perang. Ibn Kathīr tetap menjadikan al-ghuzāt sebagai makna utama, tetapi mencatat pendapat Aḥmad, al-Ḥasan, dan Isḥāq bahwa haji termasuk sabīlillāh. Al-Qurṭubī paling luas dalam pembahasan fikihnya: selain pejuang dan ribāṭ, ia menyebut haji/umrah menurut Ibn ʿUmar, Aḥmad, dan Isḥāq, serta perlengkapan perang seperti kuda dan senjata. Rujukan: al-Ṭabarī, jld. 14, hlm. 319–320; Ibn Kathīr, jld. 4, hlm. 169–170; al-Qurṭubī, jld. 8, hlm. 112–113.",
     "Jadi, menurut tiga tafsir klasik berbasis maʾthūr ini, makna utama fī sabīlillāh dalam QS 9:60 adalah pembiayaan jihad/pejuang di jalan Allah, bukan seluruh kegiatan sosial-keagamaan secara umum. Perluasan kepada haji/umrah muncul dalam Ibn Kathīr dan al-Qurṭubī sebagai pendapat yang diriwayatkan dari sebagian ulama, tetapi bukan titik tekan utama al-Ṭabarī."
    ],
-   "claimed_refs": []
+   "claimed_refs": [
+    "Al-Ṭabarī, Abū Jaʿfar Muḥammad ibn Jarīr. Jāmiʿ al-Bayān ʿan Taʾwīl Āy al-Qurʾān. Jilid 14, hlm. 319–323. Rujukan utama bagian fī sabīlillāh: hlm. 319–320.",
+    "Ibn Kathīr, Abū al-Fidāʾ Ismāʿīl ibn ʿUmar. Tafsīr al-Qurʾān al-ʿAẓīm. Jilid 4, hlm. 165–170. Rujukan utama bagian fī sabīlillāh: hlm. 169–170.",
+    "Al-Qurṭubī, Abū ʿAbd Allāh Muḥammad ibn Aḥmad. al-Jāmiʿ li Aḥkām al-Qurʾān. Jilid 8, hlm. 111–113. Rujukan utama bagian fī sabīlillāh: hlm. 111–113."
+   ]
   },
   {
    "run_id": "GEMINI-CoT-1",
@@ -1007,7 +1137,11 @@
     "Cakupan Hukum Keagamaan: Al-Ṭabarī membatasi tafsirnya secara ketat pada teks riwayat awal, yaitu jihad fisik. Sebaliknya, Ibn Kathīr dan Al-Qurṭubī membuka ruang perdebatan fikhiah mengenai masuknya ibadah haji ke dalam cakupan ayat berdasarkan variasi hadis yang mereka terima.",
     "Detail Logistik Militer: Al-Qurṭubī, karena orientasi tafsir hukumnya, jauh lebih terperinci dalam menjabarkan alokasi dana non-manusia, seperti kebolehan membeli kuda perang, membiayai mata-mata, dan membangun benteng pertahanan perbatasan (ribāṭ), yang tidak diulas secara mendalam oleh Al-Ṭabarī."
    ],
-   "claimed_refs": []
+   "claimed_refs": [
+    "Al-Qurṭubī, Abu ʿAbdullāh Muḥammad ibn Aḥmad. (1964). Al-Jāmiʿ li-Aḥkām al-Qurʾān. Kairo: Dār al-Kutub al-Miṣriyyah. Jilid 8.",
+    "Al-Ṭabarī, Abu Jaʿfar Muḥammad ibn Jarīr. (2000). Jāmiʿ al-Bayān ʿan Taʾwīl Āy al-Qurʾān. Beirut: Muʾassasat al-Risālah. Jilid 14.",
+    "Ibn Kathīr, ʿImādud dīn Abu al-Fidāʾ Ismāʿīl. (1999). Tafsīr al-Qurʾān al-ʿAẓīm. Riyadh: Dār Ṭaybah. Jilid 4."
+   ]
   },
   {
    "run_id": "GEMINI-CoT-2",
@@ -1047,7 +1181,11 @@
     "Cakupan Ibadah Haji: Ibn Kathīr cenderung ke mazhab Hanbali dalam hal ini bersikap lebih terbuka menerima opsi bahwa ibadah Haji termasuk dalam fī sabīlillāh berdasarkan athar Ibnu Abbas. Sebaliknya, al-Qurṭubī mazhab Maliki dan al-Ṭabarī membatasi ruangnya hanya pada aspek defensif/ofensif militer, dan memandang haji memiliki jalurnya sendiri di luar zakat wajib.",
     "Kriteria Kekayaan Penerima: Al-Qurṭubī secara spesifik menguraikan status fikih bahwa pejuang kaya tetap berhak menerima dana ini demi maslahat militer, sebuah ulasan fikih yang tidak dieksplorasi secara mendalam oleh al-Ṭabarī yang lebih fokus pada kodifikasi riwayat murni."
    ],
-   "claimed_refs": []
+   "claimed_refs": [
+    "Al-Qurṭubī, Abū ʿAbdillāh Muḥammad ibn Aḥmad. (1964). Al-Jāmiʿ li-Aḥkām al-Qurʾān. Kairo: Dār al-Kutub al-Miṣriyah. Jilid 8, hlm. 183-185.",
+    "Al-Ṭabarī, Abū Jaʿfar Muḥammad ibn Jarīr. (2000). Jāmiʿ al-Bayān ʿan Taʾwīl Āy al-Qurʾān. Penyunting: Aḥmad Muḥammad Shākir. Beirut: Muʾassasat al-Risālah. Jilid 14, hlm. 314-315.",
+    "Ibn Kathīr, Abū al-Fidāʾ Ismāʿīl ibn ʿUmar. (1999). Tafsīr al-Qurʾān al-ʿAẓīm. Penyunting: Sāmī ibn Muḥammad al-Salāmah. Riyadh: Dār Ṭaybah. Jilid 4, hlm. 166."
+   ]
   },
   {
    "run_id": "GEMINI-CoT-3",
@@ -1101,7 +1239,11 @@
     "Agak longgar: memasukkan ibadah Haji dan Umrah berdasarkan dalil dari mazhab Hanbali.",
     "Sangat ketat: membatasi pada perang dan pos penjagaan perbatasan (ribat); menolak keras perluasan ke fasilitas publik seperti masjid."
    ],
-   "claimed_refs": []
+   "claimed_refs": [
+    "Al-Qurṭubī, Abū ʿAbdillāh Muḥammad ibn Aḥmad. (1964). Al-Jāmiʿ li-Aḥkām al-Qurʾān (Jilid 8). Kairo: Dār al-Kutub al-Miṣriyyah.",
+    "Al-Ṭabarī, Abu Jaʿfar Muḥammad ibn Jarīr. (2001). Jāmiʿ al-Bayān ʿan Taʾwīl Āy al-Qurʾān. Tahqiq: Dr. Abdullah bin Abdul Muhsin al-Turki (Jilid 11). Kairo: Dar Hijr.",
+    "Ibn Kathīr, Abū al-Fidā’ Ismāʿīl ibn ʿUmar. (1999). Tafsīr al-Qurʾān al-ʿAẓīm. Tahqiq: Sami bin Muhammad al-Salamah (Jilid 4). Riyadh: Dar Taybah."
+   ]
   },
   {
    "run_id": "GEMINI-CoT-4",
@@ -1157,7 +1299,11 @@
     "Titik Perbedaan",
     "Perbedaan terletak pada inklusivitas ibadah haji. Ibn Kathīr bersikap lebih longgar dengan memasukkan orang yang ingin berhaji namun tidak mampu ke dalam golongan ini karena berpijak pada hadis riwayat Ahmad dan Abu Dawud. Sebaliknya, al-Ṭabarī dan al-Qurṭubī tetap konsisten membatasi frasa ini hanya pada instrumen pertahanan/militer dan menjaga perbatasan negara (ribāṭ)."
    ],
-   "claimed_refs": []
+   "claimed_refs": [
+    "Al-Qurṭubī, Abu ʿAbdullah Muḥammad bin Aḥmad. Al-Jāmiʿ li-Aḥkām al-Qurʾān. Jilid 8. Kairo: Dār al-Kutub al-Miṣriyyah, 1964.",
+    "Al-Ṭabarī, Abu Jaʿfar Muḥammad bin Jarīr. Jāmiʿ al-Bayān ʿan Taʾwīl Āy al-Qurʾān. Tahqiq: Aḥmad Muḥammad Shākir. Jilid 14. Kairo: Dār al-Maʿārif, 1958.",
+    "Ibn Kathīr, Imāduddīn Abu al-Fidā’ Ismāʿīl bin ʿUmar. Tafsīr al-Qurʾān al-ʿAẓīm. Tahqiq: Sāmī bin Muḥammad al-Salāmah. Jilid 4. Riyadh: Dār Ṭaybah, 1999."
+   ]
   },
   {
    "run_id": "GROK-CoT-1",
@@ -1203,7 +1349,12 @@
     "Ibn Kathīr: Lebih ringkas dan berorientasi hadits, tegas membatasi pada mujahid tanpa gaji dari negara.",
     "Al-Qurṭubī: Lebih fiqh-oriented, membahas perbedaan madzhab dan kemungkinan cakupan lebih luas (meski utama jihad), dengan analisis hukum mendalam."
    ],
-   "claimed_refs": []
+   "claimed_refs": [
+    "Al-Ṭabarī, Muḥammad bin Jarīr. Jāmiʿ al-Bayān ‘an Ta’wīl Āy al-Qur’ān. (Edisi standar, misalnya Dar al-Ma’rifah atau Syākir), jilid terkait Surah al-Tawbah ayat 60.",
+    "Ibn Kathīr, Ismāʿīl bin ‘Umar. Tafsīr al-Qur’ān al-ʿAẓīm. (Edisi standar), penjelasan QS. al-Tawbah:60.",
+    "Al-Qurṭubī, Muḥammad bin Aḥmad. Al-Jāmiʿ li-Aḥkām al-Qur’ān. (Edisi standar), jilid 8, hal. ~154 (pembahasan ayat 60).",
+    "Sumber pendukung online: Quran.com, KSU Tafsir Project (untuk teks riwayat)."
+   ]
   },
   {
    "run_id": "GROK-CoT-2",
@@ -1251,7 +1402,12 @@
     "Al-Qurṭubī: Lebih mendalam pada aspek aḥkām/fiqih, membahas implikasi hukum dan penerapan, tapi esensi tetap sama (mujahid). Ia cenderung lebih komprehensif dalam diskusi fiqih antar-mazhab.",
     "Secara keseluruhan, ketiganya sangat selaras, mencerminkan tradisi tafsir klasik Sunni yang konservatif terhadap frasa ini."
    ],
-   "claimed_refs": []
+   "claimed_refs": [
+    "Al-Ṭabarī, Muḥammad bin Jarīr. Jāmiʿ al-Bayān ʿan Taʾwīl Āy al-Qurʾān (Tafsīr al-Ṭabarī), juz 14, hlm. ~305 (ayat 60 Surah al-Tawbah), ed. Aḥmad Shākir atau edisi standar KSU.",
+    "Ibn Kathīr, Ismāʿīl bin ʿUmar. Tafsīr al-Qurʾān al-ʿAẓīm, penjelasan Surah al-Tawbah ayat 60 (edisi standar, bagian Expenditures of Zakah).",
+    "Al-Qurṭubī, Muḥammad bin Aḥmad. al-Jāmiʿ li-Aḥkām al-Qurʾān, juz terkait Surah al-Tawbah ayat 60 (edisi standar, ~juz 8).",
+    "Sumber pendukung online: quran.ksu.edu.sa (Tafsīr Tabarī), surahquran.com (Ibn Kathīr), dan analisis terkait Qurṭubī dari repositori akademik."
+   ]
   },
   {
    "run_id": "GROK-CoT-3",
@@ -1299,7 +1455,12 @@
     "Al-Qurṭubī: Lebih mendalam pada aspek aḥkām/fiqih, membahas implikasi hukum dan penerapan, tapi esensi tetap sama (mujahid). Ia cenderung lebih komprehensif dalam diskusi fiqih antar-mazhab.",
     "Secara keseluruhan, ketiganya sangat selaras, mencerminkan tradisi tafsir klasik Sunni yang konservatif terhadap frasa ini."
    ],
-   "claimed_refs": []
+   "claimed_refs": [
+    "Al-Ṭabarī, Muḥammad ibn Jarīr. Jāmiʿ al-Bayān ʿan Taʾwīl Āy al-Qurʾān (ed. Aḥmad Shākir atau ed. Hajar). Jilid terkait Surah al-Tawbah (misalnya hal. ~305 dalam edisi tertentu; lihat greattafsirs.com dan ketabonline.com).",
+    "Ibn Kathīr, Ismāʿīl ibn ʿUmar. Tafsīr al-Qurʾān al-ʿAẓīm. Surah al-Tawbah 9:60 (edisi standar Dar al-Ṭayyibah atau cetakan klasik).",
+    "Al-Qurṭubī, Muḥammad ibn Aḥmad. Al-Jāmiʿ li-Aḥkām al-Qurʾān. Jilid terkait Surah al-Tawbah (edisi standar, misalnya Vol. 8).",
+    "Sumber pendukung: Quran.com, GreatTafsirs.com, dan riwayat salaf yang dikutip di atas (semua berdasarkan edisi ma’thūr)."
+   ]
   },
   {
    "run_id": "GROK-CoT-4",
@@ -1343,7 +1504,12 @@
     "Ibn Kathīr sangat ketat dengan hadis dan membatasi kuat pada ghuzāt.",
     "Al-Qurṭubī menekankan aspek fiqih (ahkam), termasuk penjaga perbatasan (murabitun) dan fleksibilitas untuk kaya. Ada sedikit variasi penekanan, tapi inti sama (jihad)."
    ],
-   "claimed_refs": []
+   "claimed_refs": [
+    "Al-Ṭabarī, Abū Ja‘far Muḥammad b. Jarīr. Jāmiʿ al-Bayān ‘an Ta’wīl Āy al-Qur’ān. (Edisi standar Dar al-Kutub al-‘Ilmiyyah, jilid relevan Surah 9).",
+    "Ibn Kathīr, Ismā‘īl b. ‘Umar. Tafsīr al-Qur’ān al-ʿAẓīm. (Edisi Dar al-Taybah atau standar, jilid 4, penjelasan 9:60).",
+    "Al-Qurṭubī, Abū ‘Abdillāh Muḥammad b. Aḥmad. al-Jāmiʿ li-Aḥkām al-Qur’ān. (Edisi Dar al-Kutub al-Misriyyah, jilid 8, hlm. 187).",
+    "Sumber pendukung: Tafsir Ibn Kathir (terjemahan/ringkasan online seperti alim.org atau quranx.com); studi seperti repository Ar-Raniry tentang perbandingan al-Qurṭubī."
+   ]
   },
   {
    "run_id": "USUL-CoT-1",
@@ -1387,7 +1553,9 @@
     "• Al-Qurṭubī: menegaskan pendapat jumhur bahwa yang dimaksud adalah jihad, dan mengkritisi perluasan makna semacam memasukkan haji.",
     "Catatan: Terdapat perbedaan pendapat fikih di antara ulama terkait perluasan makna fī sabīlillāh, sehingga penjelasan ini tidak bersifat definitif."
    ],
-   "claimed_refs": []
+   "claimed_refs": [
+    "Saya tidak dapat membuat daftar pustaka di akhir karena tidak diperbolehkan oleh instruksi sistem, tetapi seluruh informasi dari kutipan telah saya tampilkan di dalam uraian."
+   ]
   },
   {
    "run_id": "USUL-CoT-2",
@@ -1426,7 +1594,11 @@
     "– Al-Ṭabarī dan al-Qurṭubī membatasi pada jihad tanpa perluasan.",
     "– Al-Qurṭubī lebih tegas menolak generalisasi makna dengan menyatakan: “سبيل الله عند الإطلاق هو الغزو” Majmūʿ fatāwā wa-rasāʾil faḍīlat al..."
    ],
-   "claimed_refs": []
+   "claimed_refs": [
+    "• Al-Ṭabarī, Jāmi‘ al-Bayān, jilid yang memuat tafsir QS 9:60, kutipan dari edisi yang tercantum dalam sumber Majallat al-Buḥūth al-Islāmiyya.",
+    "• Ibn Kathīr, Tafsīr al-Qur’ān al-‘Aẓīm, jilid yang membahas QS 9:60, sebagaimana kutipan dalam sumber Majallat al-Buḥūth al-Islāmiyya.",
+    "• Al-Qurṭubī, al-Jāmi‘ li-Aḥkām al-Qur’ān, jilid 6 halaman 534 (menurut kutipan al-Mughnī) dan rujukan langsung pada tafsir QS 9:60 sebagaimana dalam sumber"
+   ]
   },
   {
    "run_id": "USUL-CoT-3",
@@ -1435,7 +1607,7 @@
    "family": "Usul",
    "version": 3,
    "source_file": "Usul AI Pro V3.docx",
-   "word_count": 404,
+   "word_count": 442,
    "paragraphs": [
     "Berikut penjelasan berdasarkan metode tafsīr bi al-maʾthūr sejauh yang memungkinkan dari sumber yang ada.",
     "Konteks ayat dan posisi fī sabīlillāh",
@@ -1465,7 +1637,8 @@
     "• Titik perbedaan",
     "Ibn Kathīr lebih membuka ruang bagi pendapat sebagian ulama bahwa haji dapat dimasukkan, “وقال الإمام أحمد والحسن وإسحاق… يجوز أن يصرف إلى الحج” Majallat al-Buḥūth al-Islāmiyya, sedangkan al-Tabarī dan al-Qurṭubī tetap ketat membatasinya pada al-ghuzāt.",
     "Catatan fiqh",
-    "Karena isu ini termasuk khilaf ulama, maka hasil analisis tafsir ini bukan fatwa final; dalam praktik fikih terdapat perbedaan pendapat yang harus dipertimbangkan."
+    "Karena isu ini termasuk khilaf ulama, maka hasil analisis tafsir ini bukan fatwa final; dalam praktik fikih terdapat perbedaan pendapat yang harus dipertimbangkan.",
+    "Saya tidak dapat memenuhi permintaan untuk mencantumkan daftar pustaka atau rujukan bibliografis karena aturan penggunaan sumber mewajibkan tidak membuat bagian referensi apa pun. Namun, saya dapat menjawab seluruh pertanyaan Anda menggunakan kutipan langsung dari hasil pencarian yang tersedia."
    ],
    "claimed_refs": []
   },
@@ -1542,7 +1715,20 @@
     "Selain itu, sebagian ulama mutaʾakhkhirīn memperluas makna “sabīlullāh” menjadi seluruh kemaslahatan umum umat Islam. Hal ini tampak dalam sebagian fatwa kontemporer. Majallat al-Buḥūth al-Islāmiyya+1",
     "Namun pendekatan tafsīr bi al-maʾthūr klasik dari al-Ṭabarī, Ibn Kathīr, dan al-Qurṭubī lebih dekat kepada makna jihad."
    ],
-   "claimed_refs": []
+   "claimed_refs": [
+    "Al-Ṭabarī, Muḥammad ibn Jarīr. Jāmiʿ al-Bayān ʿan Taʾwīl Āy al-Qurʾān. Dinukil dalam:",
+    "Majallat al-Buḥūth al-Islāmiyyah. Majallat al-Buḥūth al-Islāmiyya",
+    "Abḥāth Hayʾat Kibār al-ʿUlamāʾ. Abḥāth hayʾat kibār al-ʿulamāʾ",
+    "Ibn Kathīr, Ismāʿīl ibn ʿUmar. Tafsīr al-Qurʾān al-ʿAẓīm. Dinukil dalam Majallat al-Buḥūth al-Islāmiyyah. Majallat al-Buḥūth al-Islāmiyya",
+    "Al-Qurṭubī, Muḥammad ibn Aḥmad al-Anṣārī. al-Jāmiʿ li-Aḥkām al-Qurʾān, jilid 9, halaman 185. Abḥāth hayʾat kibār al-ʿulamāʾ",
+    "+2",
+    "Al-Kāsānī, ʿAlāʾ al-Dīn. Badāʾiʿ al-Ṣanāʾiʿ fī Tartīb al-Sharāʾiʿ. Badāʾiʿ al-ṣanāʾiʿ fī tartīb al-sha...",
+    "+1",
+    "Al-ʿAbbād, ʿAbd al-Muḥsin. Sharḥ Sunan Abī Dāwūd. Sharḥ Sunan Abī Dāwūd",
+    "Al-Albānī, Nāṣir al-Dīn. Jāmiʿ Turāth al-ʿAllāmah al-Albānī fī al-Fiqh. Jāmiʿ turāth al-ʿAllāma al-Albānī f...",
+    "+1",
+    "Ibn ʿUthaymīn, Muḥammad ibn Ṣāliḥ. Jalasāt Ramaḍāniyyah"
+   ]
   },
   {
    "run_id": "ZAI-CoT-1",
@@ -1576,7 +1762,11 @@
     "Ibn Kathīr menambahkan dimensi hadits Nabi (riwayat Mu‘ādz) dan sangat menekankan aspek syar'i administratif dengan menyebutkan surat resmi Khalifah ‘Umar bin al-Khaṭṭāb untuk membuktikan praktik langsung Sahabat (Ibn Kathīr, Tafsīr al-Qurʾān al-ʿAẓīm, jil. 4, hlm. 24).",
     "Al-Qurṭubī, meski berpegang pada athar, sengaja menampilkan pandangan fiqh yang menyimpang (seperti pendapat Ibnu Syubrumah atau sebagian Malikiyyah yang memperbolehkan untuk masjid) hanya untuk kemudian menolaknya secara tegas dengan dalil athar Salaf. Ini menunjukkan keunikan al-Qurṭubī yang berusaha merespons perdebatan fiqh di zamannya dengan menggunakan senjata tafsīr bi al-maʾthūr (al-Qurṭubī, al-Jāmiʿ li-Aḥkām al-Qurʾān, jil. 8, hlm. 86-87)."
    ],
-   "claimed_refs": []
+   "claimed_refs": [
+    "al-Ṭabarī, Muḥammad bin Jarīr. Jāmiʿ al-Bayān ʿan Taʾwīl Āy al-Qurʾān. Tahrir: Aḥmad Muḥammad Shākir. Beirut: Dār al-Fikr, 1405 H / 1985 M, Jilid 14, Halaman 312-316.",
+    "Ibn Kathīr, Ismā‘īl bin ʿUmar. Tafsīr al-Qurʾān al-ʿAẓīm. Tahrir: Samī bin Muḥammad al-Sālim. Riyadh: Dār Ṭayyibah, 1999 M, Jilid 4, Halaman 23-25.",
+    "al-Qurṭubī, Muḥammad bin Aḥmad. al-Jāmiʿ li-Aḥkām al-Qurʾān. Beirut: Dār al-Risālah, 2006 M, Jilid 8, Halaman 85-87."
+   ]
   },
   {
    "run_id": "ZAI-CoT-2",
@@ -1585,7 +1775,7 @@
    "family": "Zhipu",
    "version": 2,
    "source_file": "Z.AI GLM Turbo V2.docx",
-   "word_count": 852,
+   "word_count": 933,
    "paragraphs": [
     "Berikut adalah penjelasan mengenai makna frasa fī sabīlillāh dalam QS al-Tawbah [9]: 60 berdasarkan metode tafsīr bi al-maʾthūr dari tiga kitab tafsir klasik utama.",
     "Konteks Ayat dan Kedudukan fī sabīlillāh di Antara Delapan Golongan Penerima Zakat",
@@ -1617,9 +1807,21 @@
     "Titik Perbedaan:",
     "Al-Ṭabarī lebih kompromistik terhadap makna bahasa. Ia mengakui bahwa secara etimologi kata tersebut luas (\"segala ketaatan\"), namun ia membatasinya pada konteks ayat melalui riwayat tanpa menolak keras interpretasi yang lebih luas.",
     "Ibn Kathīr paling tegas dan eksklusif. Ia secara apriori menolak penafsiran fī sabīlillāh untuk kepentingan umum (seperti membangun masjid atau jembatan) dan membatasinya secara mutlak pada pasukan perang (jihad).",
-    "Al-Qurṭubī lebih komprehensif dalam memaparkan pro dan kontra di kalangan ahli hukum (fuqahā'). Ia tidak hanya membahas aspek tafsir, tetapi juga fikih praktisnya, seperti membolehkan orang kaya menerima zakat bagian ini selama ia menjadi ghāzī (pejuang), sebuah titik hukum yang tidak dibahas se-detail itu oleh al-Ṭabarī dan Ibn Kathīr."
+    "Al-Qurṭubī lebih komprehensif dalam memaparkan pro dan kontra di kalangan ahli hukum (fuqahā'). Ia tidak hanya membahas aspek tafsir, tetapi juga fikih praktisnya, seperti membolehkan orang kaya menerima zakat bagian ini selama ia menjadi ghāzī (pejuang), sebuah titik hukum yang tidak dibahas se-detail itu oleh al-Ṭabarī dan Ibn Kathīr.",
+    "4. Rujukan Kitab Secara Presisi",
+    "Berikut adalah rincian rujukan untuk setiap pernyataan di atas:",
+    "Pernyataan tentang pandangan Mujāhid dan Ibrāhīm al-Nakhaʿī, serta kesimpulan Al-Ṭabarī:",
+    "Al-Ṭabarī, Jāmiʿ al-Bayān ʿan Taʾwīl Āy al-Qurʾān. Jilid 14. Hal. 333–336.",
+    "Pernyataan tentang pandangan Ibn ʿAbbās (haji) dan Mujāhid (ghuzāt), serta kesimpulan eksklusif Ibn Kathīr:",
+    "Ibn Kathīr, Tafsīr al-Qurʾān al-ʿAẓīm. Jilid 4. Hal. 102–103.",
+    "Pernyataan tentang kutipan Hasan al-Baṣrī, ʿAṭāʾ, Qāḍī Ibn al-ʿArabī, dan diskusi hukum fikih oleh Al-Qurṭubī:",
+    "Al-Qurṭubī, al-Jāmiʿ li-Aḥkām al-Qurʾān. Jilid 8. Hal. 188–191."
    ],
-   "claimed_refs": []
+   "claimed_refs": [
+    "Al-Qurṭubī, Muḥammad b. Aḥmad. Al-Jāmiʿ li-Aḥkām al-Qurʾān. Kairo: Dār al-Kutub al-Miṣriyyah / Mu'assasat al-Risālah. Jilid 8.",
+    "Al-Ṭabarī, Muḥammad b. Jarīr. Jāmiʿ al-Bayān ʿan Taʾwīl Āy al-Qurʾān. Riyad: Dār ʿĀlam al-Kutub / Mu'assasat al-Risālah. Jilid 14.",
+    "Ibn Kathīr, Ismāʿīl b. ʿUmar. Tafsīr al-Qurʾān al-ʿAẓīm. Riyad: Dār Ṭaybah. Jilid 4."
+   ]
   },
   {
    "run_id": "ZAI-CoT-3",
@@ -1653,7 +1855,11 @@
     "Ibnu Katsīr bersikap paling eksklusif dan tegas. Ia tidak hanya menolak pendapat luas tersebut, tetapi secara eksplisit menganggapnya sebagai kesalahan (khathā') dan tidak memiliki dasar dari Salaf, sehingga menutup ruang ijtihad untuk memperluas makna ayat ini (Tafsīr al-Qurʾān al-ʿAẓīm, jil. 4, hlm. 20).",
     "Al-Qurṭubī bersikap komprehensif secara fikih. Ia menyetujui makna khusus untuk pejuang sebagai pendapat utama, tetapi karena sifat kitabnya yang ensiklopedis dalam hukum, ia mendokumentasikan praktik historis dan perbedaan pendapat fiqih (seperti keputusan Umar bin Abdul Aziz) secara netral sebagai catatan variasi hukum, tanpa serangan keras seperti yang dilakukan Ibnu Katsīr (al-Jāmiʿ li-Aḥkām al-Qurʾān, jil. 8, hlm. 73-74)."
    ],
-   "claimed_refs": []
+   "claimed_refs": [
+    "Al-Ṭabarī, Muḥammad ibn Jarīr. Jāmiʿ al-Bayān ʿan Taʾwīl al-Qurʾān. Tahqiq: Aḥmad Muḥammad Shākir. Kairo: Dār al-Maʿārif, [t.t.]. Jilid 10, hlm. 455–458.",
+    "Ibn Kathīr, Ismāʿīl ibn ʿUmar. Tafsīr al-Qurʾān al-ʿAẓīm. Tahqiq: Samī ibn Muḥammad al-Sālim. Riyadh: Dār Ṭayyibah li al-Nasyr wa al-Tawzīʿ, 1999. Jilid 4, hlm. 18–20.",
+    "Al-Qurṭubī, Muḥammad ibn Aḥmad. al-Jāmiʿ li-Aḥkām al-Qurʾān. Tahqiq: Hāshim Samī al-Bahrāwī. Beirut: Dār al-Risālah, 2006. Jilid 8, hlm. 72–74."
+   ]
   },
   {
    "run_id": "ZAI-CoT-4",
@@ -1697,7 +1903,11 @@
     "Ibn Kathīr menekankan pada penfilteran sanad (menggunakan hadis Nabi sebagai benteng tambahan) dan secara tegas menolak pendapat kelompok muta'akhkhirin (seperti sebagian kaum Sufi) yang menafsirkannya sebagai dana untuk mendirikan ribat, zawiyyah, atau kegiatan dakwah non-militer. Bagi Ibn Kathir, pembatasan makna pada \"pejuang fisik\" adalah hukum final.",
     "Al-Qurṭubī memasukkan dimensi fiqh (jurisprudensi). Ia menggunakan athar yang sama, tetapi kemudian menggunakannya sebagai basis untuk menyerang pendapat ulama fiqih lain (seperti Abu Hanifah) yang memperluas makna fī sabīlillāh ke ranah infrastruktur publik atau ibadah non-perang. Al-Qurṭubī membahas bagaimana athar Salaf ini menutup pintu terhadap ijtihad yang terlalu luas dalam penggunaan dana zakat."
    ],
-   "claimed_refs": []
+   "claimed_refs": [
+    "Al-Ṭabarī, Muḥammad bin Jarīr. Jāmiʿ al-Bayān ʿan Taʾwīl Āy al-Qurʾān. Ditahqiq oleh Aḥmad Muḥammad Shākir. Kairo: Mu'assasat al-Risālah, 1420 H / 2000 M. Jilid 11.",
+    "Ibn Kathīr, Ismāʿīl bin ʿUmar. Tafsīr al-Qurʾān al-ʿAẓīm. Beirut: Dār al-Maʿrifah, 2006 M. Jilid 4.",
+    "Al-Qurṭubī, Muḥammad bin Aḥmad. al-Jāmiʿ li-Aḥkām al-Qurʾān. Ditahqiq oleh Hishām Samīr al-Bakrī. Beirut: Dār al-Risālah, 2006 M. Jilid 8."
+   ]
   }
  ]
 }

@@ -3,7 +3,7 @@
 import zipfile, re, html, glob, os, json
 
 BASE = "/Users/solehhasanwahid/Library/CloudStorage/GoogleDrive-wahid@uinponorogo.ac.id/Drive Saya/BAHAN PENELITIAN/AI TASFIT ASSESMENT"
-RESP_DIR = "/tmp/datarespon_extract/DATA RESPON AI"
+RESP_DIR = os.path.join(BASE, "DATA RESPON AI 2")   # versi dengan Daftar Pustaka lengkap
 
 def docx_paras(path):
     z = zipfile.ZipFile(path)
@@ -29,15 +29,32 @@ def find_version(fname):
     m = re.search(r'[Vv]\s*\.?\s*(\d)', fname)
     return int(m.group(1)) if m else None
 
-REF_HEADERS = ('daftar pustaka', 'daftar referensi', 'daftar rujukan', 'referensi', 'bibliography', 'daftar pustaka:')
+REF_HEADERS = {'daftar pustaka', 'daftar referensi', 'daftar rujukan', 'referensi',
+               'rujukan', 'bibliografi', 'bibliography', 'sumber', 'daftar sumber'}
+
+def _norm_hdr(s):
+    # buang prefix nomor ("4. ", "4) ") lalu normalkan
+    return re.sub(r'^[0-9]+[\.\)]\s*', '', s).strip().lower().rstrip(':').strip()
+
+def _is_ref_header(n):
+    if len(n) > 45:                       # header itu pendek; kalimat panjang bukan header
+        return False
+    if n in REF_HEADERS:
+        return True
+    if (n.startswith('daftar pustaka') or n.startswith('daftar referensi')
+            or n.startswith('daftar rujukan') or n.startswith('referensi') or n.startswith('rujukan')):
+        return True
+    if 'daftar pustaka' in n or 'daftar referensi' in n or 'daftar rujukan' in n:  # mis. "Referensi (Daftar Pustaka)"
+        return True
+    return False
 
 def split_refs(paras):
-    """Separate body paragraphs from a trailing reference list, if present."""
+    """Pisahkan body dari daftar pustaka di akhir. Pakai header TERAKHIR
+    (agar sebutan 'Daftar Pustaka' inline di tubuh tidak salah tangkap)."""
     idx = None
     for i, p in enumerate(paras):
-        pl = p.strip().lower().rstrip(':').strip()
-        if pl in REF_HEADERS or pl.startswith('daftar pustaka') or pl.startswith('daftar referensi') or pl.startswith('daftar rujukan'):
-            idx = i; break
+        if _is_ref_header(_norm_hdr(p)):
+            idx = i   # ambil yang terakhir
     if idx is None:
         return paras, []
     body = paras[:idx]

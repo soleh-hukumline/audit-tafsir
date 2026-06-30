@@ -94,6 +94,7 @@ const DATA = __DATA__;
 
 const LS_FIND="audit_tafsir_findings_v1", LS_CFG="audit_tafsir_config_v1", LS_RUB="audit_tafsir_rubric_v1";
 const LS_RALL="audit_tafsir_ruball_v1", LS_SYNC="audit_tafsir_sync_v1";
+const DEFAULT_SYNC_URL="https://script.google.com/macros/s/AKfycbxGbYQz8uQuhGvxhNgWCxSZ535s37x3UqNvPNop6hY7Co5iCDtHRY-Z_UNpnLvm9V2h/exec";
 const $=(s,el=document)=>el.querySelector(s), $$=(s,el=document)=>[...el.querySelectorAll(s)];
 const esc=s=>(s==null?"":String(s)).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const isAr=s=>/[؀-ۿ]/.test(s) && !/[A-Za-z]{3}/.test(s);
@@ -106,7 +107,7 @@ let cfg=load(LS_CFG,{
   pillarWeight:{P1:1.0,P2:1.0,P3:1.0}, K:5,
   statusFactor:{"Terkonfirmasi":1,"Diragukan":0.5,"Tidak terbukti":0,"Perlu cek ulang":0.25}
 });
-let sync=load(LS_SYNC,{url:"",coder:"",auto:true});
+let sync=load(LS_SYNC,{url:DEFAULT_SYNC_URL,coder:"",auto:true});
 let curRun=DATA.responses[0]?.run_id||null, curGT=DATA.ground_truth[0]?.id||null, gtMode="ar";
 let syncMsg="";
 const online=()=>!!(sync.url&&sync.url.indexOf("http")===0);
@@ -309,7 +310,7 @@ function renderKoding(){
   <div class="grid2">
     <div class="card">
       <div class="flexsb"><h3>Respons AI <span class="tag">${esc(r.run_id)}</span></h3>
-      <button class="btn sec sm" id="btnRefs">Referensi diklaim (${r.claimed_refs.length})</button></div>
+      <span class="tag">${r.claimed_refs.length} ref diklaim</span></div>
       <div class="readpane">${r.paragraphs.map(p=>`<p>${esc(p)}</p>`).join("")}</div>
     </div>
     <div class="card">
@@ -319,6 +320,14 @@ function renderKoding(){
       <div class="small muted" style="margin-bottom:6px">${esc(gt.title)}</div>
       <div class="readpane">${gtParas.map(p=>`<p class="${isAr(p)?'gt-ar':''}">${esc(p)}</p>`).join("")||'<p class="muted">—</p>'}</div>
     </div>
+  </div>
+
+  <div class="card">
+    <div class="flexsb"><h3>Daftar pustaka diklaim model <span class="tag">${r.claimed_refs.length} entri</span></h3>
+      <span class="small muted">bandingkan dgn ground truth → kandidat <b>Citation Fabrication</b> / <b>Named Entity Hallucination</b></span></div>
+    ${r.claimed_refs.length
+      ? `<ol class="small" style="margin:6px 0 0;padding-left:20px;line-height:1.75">${r.claimed_refs.map(x=>`<li style="margin-bottom:3px">${esc(x)}</li>`).join("")}</ol>`
+      : `<div class="notice">Model TIDAK mencantumkan daftar pustaka. Catat sendiri: apakah menolak menyebut sumber, atau hanya sitasi inline? (lih. respons di atas)</div>`}
   </div>
 
   <div class="card">
@@ -356,7 +365,6 @@ function renderKoding(){
   $("#btnAdd").onclick=addFinding;
   $("#btnAuto").onclick=()=>{autoCode(curRun);renderKoding();};
   $("#btnAutoAll").onclick=()=>{if(confirm("Isi otomatis (heuristik) untuk semua 28 respons? Hasil AUTO lama diganti; temuan manual tetap aman.")){autoCodeAll();renderKoding();}};
-  $("#btnRefs").onclick=()=>{const h=r.claimed_refs.length?r.claimed_refs.map(x=>`<p class="small">${esc(x)}</p>`).join(""):"<p class='muted'>Model tidak mencantumkan daftar referensi terpisah.</p>";showModal(`Referensi diklaim — ${esc(r.run_id)}`,h);};
   $$("#findBody [data-del]").forEach(b=>b.onclick=()=>{const id=b.dataset.del;findings=findings.filter(f=>f.id!==id);save();delFindingRemote(id);renderKoding();});
   $$("#rubGrid .seg button").forEach(b=>b.onclick=()=>{
     const dim=b.dataset.dim, val=+b.dataset.v;
@@ -496,8 +504,12 @@ function showModal(title,html){
 // ---------- init: sinkron + auto-fill saat dibuka ----------
 async function init(){
   render();                                  // tampil cepat dulu
+  if(online() && !sync.coder){               // minta nama koder sekali (mode shared)
+    const n=prompt("Selamat datang. Masukkan NAMA KODER Anda (agar kontribusi penilaian terlacak):");
+    if(n&&n.trim()){ sync.coder=n.trim(); save(); }
+  }
   if(online()){ await pullAll(); }
-  if(sync.auto!==false && findings.length===0){ autoCodeAll(); }   // terisi otomatis bila masih kosong
+  if(sync.auto!==false && findings.length===0){ autoCodeAll(); }   // seed otomatis bila DB masih kosong
   render();
 }
 init();

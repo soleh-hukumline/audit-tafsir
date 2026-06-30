@@ -65,25 +65,35 @@ function doPost(e){
       for(var j=d2.length-1;j>=1;j--){ if(String(d2[j][0])===String(body.id)) sh2.deleteRow(j+1); }
       return _json({ok:true});
     }
+    if(body.action==='reset'){
+      // kosongkan semua data (sisakan header). Untuk mulai bersih.
+      var rf=_sheet(SHEET_F,F_COLS); if(rf.getLastRow()>1) rf.deleteRows(2, rf.getLastRow()-1);
+      var rr0=_sheet(SHEET_R,R_COLS); if(rr0.getLastRow()>1) rr0.deleteRows(2, rr0.getLastRow()-1);
+      return _json({ok:true});
+    }
     if(body.action==='bulk'){
-      // seed/replace banyak sekaligus (dipakai auto-fill). findings[] & rubric[] (rows).
-      if(body.findings){
+      // seed/replace banyak sekaligus (dipakai auto-fill). Tulis batch (cepat).
+      if(body.findings && body.findings.length){
         var fs=_sheet(SHEET_F,F_COLS), fd=fs.getDataRange().getValues(), idx={};
         for(var a=1;a<fd.length;a++) idx[String(fd[a][0])]=a+1;
+        var fApp=[];
         body.findings.forEach(function(fnd){
           var row=F_COLS.map(function(c){ return c==='updated'?now:(fnd[c]!=null?fnd[c]:''); });
           if(idx[String(fnd.id)]) fs.getRange(idx[String(fnd.id)],1,1,F_COLS.length).setValues([row]);
-          else fs.appendRow(row);
+          else fApp.push(row);
         });
+        if(fApp.length) fs.getRange(fs.getLastRow()+1,1,fApp.length,F_COLS.length).setValues(fApp);
       }
-      if(body.rubric){
+      if(body.rubric && body.rubric.length){
         var rs2=_sheet(SHEET_R,R_COLS), rd2=rs2.getDataRange().getValues(), ridx={};
         for(var b=1;b<rd2.length;b++) ridx[rd2[b][0]+'|'+rd2[b][1]+'|'+rd2[b][2]]=b+1;
+        var rApp=[];
         body.rubric.forEach(function(rr){
           var key=rr.run_id+'|'+rr.coder+'|'+rr.dim, row=[rr.run_id,rr.coder,rr.dim,rr.value,now];
           if(ridx[key]) rs2.getRange(ridx[key],1,1,R_COLS.length).setValues([row]);
-          else rs2.appendRow(row);
+          else rApp.push(row);
         });
+        if(rApp.length) rs2.getRange(rs2.getLastRow()+1,1,rApp.length,R_COLS.length).setValues(rApp);
       }
       return _json({ok:true});
     }
