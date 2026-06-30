@@ -93,20 +93,25 @@ const DATA = {"meta": {"title": "Sistem Audit Forensik — fī sabīlillāh (QS 
 /* ================================ */
 
 const LS_FIND="audit_tafsir_findings_v1", LS_CFG="audit_tafsir_config_v1", LS_RUB="audit_tafsir_rubric_v1";
+const LS_RALL="audit_tafsir_ruball_v1", LS_SYNC="audit_tafsir_sync_v1";
 const $=(s,el=document)=>el.querySelector(s), $$=(s,el=document)=>[...el.querySelectorAll(s)];
 const esc=s=>(s==null?"":String(s)).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const isAr=s=>/[؀-ۿ]/.test(s) && !/[A-Za-z]{3}/.test(s);
 
 // ---------- state ----------
 let findings=load(LS_FIND,[]);
-let rubric=load(LS_RUB,{});                 // rubric[run_id] = {r1:0..2|null,...}
+let rubric=load(LS_RUB,{});                 // rubric[run_id] = {r1:0..2|null,...} (koder ini)
+let rubricAll=load(LS_RALL,[]);             // baris {run_id,coder,dim,value} dari semua koder (mode online)
 let cfg=load(LS_CFG,{
   pillarWeight:{P1:1.0,P2:1.0,P3:1.0}, K:5,
   statusFactor:{"Terkonfirmasi":1,"Diragukan":0.5,"Tidak terbukti":0,"Perlu cek ulang":0.25}
 });
+let sync=load(LS_SYNC,{url:"",coder:"",auto:true});
 let curRun=DATA.responses[0]?.run_id||null, curGT=DATA.ground_truth[0]?.id||null, gtMode="ar";
+let syncMsg="";
+const online=()=>!!(sync.url&&sync.url.indexOf("http")===0);
 function load(k,def){try{const v=JSON.parse(localStorage.getItem(k));return v??def;}catch(e){return def;}}
-function save(){localStorage.setItem(LS_FIND,JSON.stringify(findings));localStorage.setItem(LS_CFG,JSON.stringify(cfg));localStorage.setItem(LS_RUB,JSON.stringify(rubric));}
+function save(){localStorage.setItem(LS_FIND,JSON.stringify(findings));localStorage.setItem(LS_CFG,JSON.stringify(cfg));localStorage.setItem(LS_RUB,JSON.stringify(rubric));localStorage.setItem(LS_RALL,JSON.stringify(rubricAll));localStorage.setItem(LS_SYNC,JSON.stringify(sync));}
 
 const catByName=Object.fromEntries(DATA.taxonomy.categories.map(c=>[c.name,c]));
 const respByRun=Object.fromEntries(DATA.responses.map(r=>[r.run_id,r]));
@@ -122,11 +127,46 @@ function runScore(run){const pen=runFindings(run).reduce((a,f)=>a+findingPenalty
 function modelScore(m){const rs=DATA.responses.filter(r=>r.model===m);return rs.length?+(rs.reduce((a,r)=>a+runScore(r.run_id),0)/rs.length).toFixed(1):100;}
 const scoreColor=v=>v>=85?"var(--good)":v>=65?"var(--warn)":"var(--bad)";
 
-// ---------- scoring: Skor Kualitas (rubrik positif) ----------
-const rubScores=run=>rubric[run]||{};
-function qualityScore(run){const r=rubScores(run);const vals=RUB.map(d=>r[d.id]).filter(v=>v!=null&&v!=="");if(!vals.length)return null;return +(vals.reduce((a,v)=>a+ +v,0)/(vals.length*2)*100).toFixed(1);}
+// ---------- scoring: Skor Kualitas (rubrik positif, sadar multi-koder) ----------
+// Sel rubrik untuk satu run (semua koder). Online: dari rubricAll. Offline: dari rubric lokal (koder ini).
+function rubCells(run){
+  if(online()) return rubricAll.filter(r=>String(r.run_id)===String(run)&&r.value!=null&&r.value!=="");
+  const o=rubric[run]||{}; return Object.keys(o).filter(d=>o[d]!=null&&o[d]!=="").map(d=>({run_id:run,coder:sync.coder||"manual",dim:d,value:+o[d]}));
+}
+// Skor rubrik yang sedang DIEDIT (milik koder aktif).
+function rubScores(run){
+  if(online()){const out={};rubricAll.filter(r=>String(r.run_id)===String(run)&&String(r.coder)===String(sync.coder)).forEach(r=>out[r.dim]=+r.value);return out;}
+  return rubric[run]||{};
+}
+function qualityScore(run){
+  const cells=rubCells(run); if(!cells.length) return null;
+  const byDim={}; cells.forEach(c=>{(byDim[c.dim]=byDim[c.dim]||[]).push(+c.value);});
+  const means=Object.values(byDim).map(a=>a.reduce((x,y)=>x+y,0)/a.length);
+  return +(means.reduce((x,y)=>x+y,0)/(means.length*2)*100).toFixed(1);
+}
 function modelQuality(m){const rs=DATA.responses.filter(r=>r.model===m).map(r=>qualityScore(r.run_id)).filter(v=>v!=null);return rs.length?+(rs.reduce((a,v)=>a+v,0)/rs.length).toFixed(1):null;}
-function dimAvg(dimId){const vals=DATA.responses.map(r=>rubScores(r.run_id)[dimId]).filter(v=>v!=null&&v!=="");return vals.length?+(vals.reduce((a,v)=>a+ +v,0)/vals.length).toFixed(2):null;}
+function dimAvg(dimId){const vals=[];DATA.responses.forEach(r=>rubCells(r.run_id).filter(c=>c.dim===dimId).forEach(c=>vals.push(+c.value)));return vals.length?+(vals.reduce((a,v)=>a+v,0)/vals.length).toFixed(2):null;}
+
+// ===================================================================
+//  SYNC (Google Sheet via Apps Script Web App)
+// ===================================================================
+function postSync(payload){ if(!online())return Promise.resolve(); return fetch(sync.url,{method:"POST",body:JSON.stringify(payload)}).catch(e=>{syncMsg="⚠ gagal kirim: "+e;}); }
+function pushFinding(f){ return postSync({action:"upsertFinding",finding:flatF(f)}); }
+function delFindingRemote(id){ return postSync({action:"deleteFinding",id}); }
+function pushRubric(run,dim,val){ return postSync({action:"setRubric",run_id:run,coder:sync.coder||"manual",dim,value:(val==null?"":val)}); }
+function flatF(f){return {id:f.id,run_id:f.run_id,model:f.model,category:f.category,severity:f.severity??"",status:f.status,coder:f.coder,quote:f.quote,source:f.source,note:f.note};}
+async function pullAll(){
+  if(!online())return;
+  try{
+    syncMsg="menarik data…"; if(typeof render==="function"&&tab==="ekspor")renderSyncStatus();
+    const res=await fetch(sync.url); const d=await res.json();
+    if(!d.ok)throw new Error("respons server bukan ok");
+    findings=(d.findings||[]).map(x=>({id:String(x.id),run_id:String(x.run_id),model:x.model,category:x.category,severity:(x.severity===""||x.severity==null)?null:+x.severity,status:x.status,coder:x.coder,quote:x.quote,source:x.source,note:x.note}));
+    rubricAll=(d.rubric||[]).map(r=>({run_id:String(r.run_id),coder:String(r.coder),dim:String(r.dim),value:+r.value}));
+    save(); syncMsg="✓ tersinkron ("+findings.length+" temuan, "+rubricAll.length+" sel rubrik)";
+  }catch(e){ syncMsg="⚠ gagal tarik: "+e.message; }
+}
+function renderSyncStatus(){ const el=$("#syncStatus"); if(el)el.textContent=syncMsg; }
 
 // ===================================================================
 //  AUTO-CODER (heuristik) — kandidat temuan + rubrik, "Perlu cek ulang"
@@ -149,15 +189,17 @@ function sentenceWith(text,re){
   for(const s of parts){if(re.test(s))return s.trim();}
   const m=text.match(re); return m?text.slice(Math.max(0,text.indexOf(m[0])-40),text.indexOf(m[0])+120).trim():"";
 }
-function autoCode(run){
+function autoCode(run,bulkAcc){
   const r=respByRun[run], text=r.paragraphs.join("\n");
   findings=findings.filter(f=>!(f.run_id===run&&f.coder==="auto"));   // ganti hasil auto lama, simpan manual
-  const add=(cat,re,note)=>{const q=sentenceWith(text,re);findings.push({id:"a"+Date.now().toString(36)+Math.random().toString(36).slice(2,6),run_id:run,model:r.model,category:cat,severity:null,status:"Perlu cek ulang",coder:"auto",quote:q.slice(0,300),source:"",note:note});};
+  const slug=s=>s.replace(/[^A-Za-z]+/g,"");
+  const newFs=[];
+  const add=(cat,re,note)=>{const q=sentenceWith(text,re);const f={id:"auto_"+run+"_"+slug(cat),run_id:run,model:r.model,category:cat,severity:null,status:"Perlu cek ulang",coder:"auto",quote:q.slice(0,300),source:"",note:note};findings.push(f);newFs.push(f);};
   if(SIG.ijma.test(text)) add("False Consensus (Ijmāʿ)",SIG.ijma,"Auto: terdeteksi klaim kesepakatan/ijmāʿ — cek apakah sumber justru khilāf.");
   if(SIG.modern.test(text)) add("Anachronistic Expansion",SIG.modern,"Auto: terdeteksi perluasan makna ke ranah modern/umum — cek dasar ma'thūr.");
   if(SIG.cite.test(text)) add("Citation Fabrication",SIG.cite,"Auto: terdeteksi rujukan jilid/halaman — verifikasi ke edisi sumber.");
   if(!SIG.sanadStrong.test(text)&&!SIG.sanadWeak.test(text)) add("Essay-ization",/.+/,"Auto: tak ada penanda sanad/atsar — kemungkinan esai-isasi.");
-  // rubrik otomatis (dim bersinyal jelas; r6,r7 dibiarkan manual)
+  // rubrik otomatis koder "auto" (dim bersinyal jelas; r6,r7 dibiarkan manual)
   const R={};
   const muf=[SIG.tabari,SIG.ibnkathir,SIG.qurtubi].filter(re=>re.test(text)).length;
   R.r1 = muf>=3?2:muf===2?1:0;
@@ -165,11 +207,35 @@ function autoCode(run){
   R.r3 = SIG.haji.test(text)?(SIG.hajiAuth.test(text)?2:1):0;
   R.r4 = SIG.sanadStrong.test(text)?2:SIG.sanadWeak.test(text)?1:0;
   R.r5 = R.r4;
-  R.r8 = SIG.modern.test(text)?0:(rubScores(run).r8??null);
-  rubric[run]=Object.assign({},rubric[run]||{},R);
+  if(SIG.modern.test(text)) R.r8=0;
+  const rubRows=[];
+  Object.keys(R).forEach(dim=>{
+    const ac="auto";
+    rubricAll=rubricAll.filter(x=>!(x.run_id===run&&x.coder===ac&&x.dim===dim));
+    rubricAll.push({run_id:run,coder:ac,dim,value:R[dim]});
+    rubRows.push({run_id:run,coder:ac,dim,value:R[dim]});
+    if(!online()){ if(!rubric[run])rubric[run]={}; if(rubric[run][dim]==null) rubric[run][dim]=R[dim]; }
+  });
+  save();
+  if(bulkAcc){ newFs.forEach(f=>bulkAcc.findings.push(flatF(f))); rubRows.forEach(x=>bulkAcc.rubric.push(x)); }
+  return {findings:newFs,rubric:rubRows};
+}
+function autoCodeAll(){
+  const acc={findings:[],rubric:[]};
+  DATA.responses.forEach(r=>autoCode(r.run_id,acc));
+  if(online()) postSync({action:"bulk",findings:acc.findings,rubric:acc.rubric}).then(()=>{syncMsg="✓ auto-fill terkirim ke server";renderSyncStatus();});
+}
+// rubrik: set / batal nilai 1 dimensi (koder aktif)
+function setRub(run,dim,val){
+  if(online()){
+    rubricAll=rubricAll.filter(x=>!(x.run_id===run&&String(x.coder)===String(sync.coder)&&x.dim===dim));
+    if(val!=null) rubricAll.push({run_id:run,coder:sync.coder||"manual",dim,value:val});
+    pushRubric(run,dim,val);
+  } else {
+    if(!rubric[run])rubric[run]={}; rubric[run][dim]=val;
+  }
   save();
 }
-function autoCodeAll(){DATA.responses.forEach(r=>autoCode(r.run_id));}
 
 // ---------- nav ----------
 const TABS=[["ringkasan","Ringkasan"],["koding","Koding (Kualitatif)"],["kuantitatif","Kuantitatif"],["ekspor","Ekspor / Impor"]];
@@ -266,7 +332,7 @@ function renderKoding(){
       <div class="field" style="flex:2"><label>Kategori error</label><select id="fCat">${catOpts}</select></div>
       <div class="field" style="max-width:120px"><label>Severity</label><select id="fSev"><option value="">(default)</option><option>1</option><option>2</option><option>3</option></select></div>
       <div class="field" style="max-width:170px"><label>Status</label><select id="fStat">${statusOpts}</select></div>
-      <div class="field" style="max-width:130px"><label>Koder</label><input type="text" id="fCoder" placeholder="Koder A"></div>
+      <div class="field" style="max-width:130px"><label>Koder</label><input type="text" id="fCoder" placeholder="Koder A" value="${esc(sync.coder||'')}"></div>
     </div>
     <div class="row" style="margin-top:10px">
       <div class="field" style="flex:2"><label>Kutipan bermasalah (verbatim)</label><textarea id="fQuote" placeholder="Tempel frasa persis dari respons…"></textarea></div>
@@ -291,12 +357,12 @@ function renderKoding(){
   $("#btnAuto").onclick=()=>{autoCode(curRun);renderKoding();};
   $("#btnAutoAll").onclick=()=>{if(confirm("Isi otomatis (heuristik) untuk semua 28 respons? Hasil AUTO lama diganti; temuan manual tetap aman.")){autoCodeAll();renderKoding();}};
   $("#btnRefs").onclick=()=>{const h=r.claimed_refs.length?r.claimed_refs.map(x=>`<p class="small">${esc(x)}</p>`).join(""):"<p class='muted'>Model tidak mencantumkan daftar referensi terpisah.</p>";showModal(`Referensi diklaim — ${esc(r.run_id)}`,h);};
-  $$("#findBody [data-del]").forEach(b=>b.onclick=()=>{findings=findings.filter(f=>f.id!==b.dataset.del);save();renderKoding();});
+  $$("#findBody [data-del]").forEach(b=>b.onclick=()=>{const id=b.dataset.del;findings=findings.filter(f=>f.id!==id);save();delFindingRemote(id);renderKoding();});
   $$("#rubGrid .seg button").forEach(b=>b.onclick=()=>{
     const dim=b.dataset.dim, val=+b.dataset.v;
-    if(!rubric[curRun])rubric[curRun]={};
-    rubric[curRun][dim]=(rubric[curRun][dim]===val)?null:val;   // klik lagi = batal
-    save();renderKoding();
+    const cur=rubScores(curRun)[dim];
+    setRub(curRun,dim,(cur===val)?null:val);   // klik lagi = batal
+    renderKoding();
   });
 }
 function renderRubItem(d){
@@ -314,10 +380,10 @@ function renderFindRow(f,i){
 function addFinding(){
   const q=$("#fQuote").value.trim();
   if(!q){alert("Isi kutipan bermasalah dulu.");return;}
-  findings.push({id:"f"+Date.now()+Math.floor(Math.random()*1000),run_id:curRun,model:respByRun[curRun].model,
+  const f={id:"f"+Date.now()+Math.floor(Math.random()*1000),run_id:curRun,model:respByRun[curRun].model,
     category:$("#fCat").value,severity:$("#fSev").value?+$("#fSev").value:null,status:$("#fStat").value,
-    coder:$("#fCoder").value.trim()||"manual",quote:q,source:$("#fSrc").value.trim(),note:$("#fNote").value.trim()});
-  save();renderKoding();
+    coder:$("#fCoder").value.trim()||sync.coder||"manual",quote:q,source:$("#fSrc").value.trim(),note:$("#fNote").value.trim()};
+  findings.push(f);save();pushFinding(f);renderKoding();
 }
 
 // ---------- TAB: Kuantitatif ----------
@@ -374,6 +440,20 @@ function renderKuant(){
 // ---------- TAB: Ekspor ----------
 function renderEkspor(){
   $("#main").innerHTML=`
+  <div class="card"><h3>Sinkron bersama (Google Sheet) ${online()?'<span class="autotag" style="color:var(--good);border-color:var(--good)">ONLINE</span>':'<span class="tag">offline</span>'}</h3>
+    <p class="muted small">Tempel <b>Web App URL</b> dari Google Apps Script (file <code>AppsScript_Code.gs</code>) agar semua penilai berbagi satu database. Beri <b>nama koder</b> agar kontribusi tiap orang terlacak.</p>
+    <div class="row">
+      <div class="field" style="flex:3"><label>Web App URL (…/exec)</label><input type="text" id="syncUrl" value="${esc(sync.url||'')}" placeholder="https://script.google.com/macros/s/.../exec"></div>
+      <div class="field" style="max-width:160px"><label>Nama koder</label><input type="text" id="syncCoder" value="${esc(sync.coder||'')}" placeholder="mis. Wahid"></div>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <button class="btn" id="syncSave">Simpan &amp; sambungkan</button>
+      <button class="btn sec" id="syncPull">↻ Tarik terbaru</button>
+      <button class="btn sec" id="syncOff">Putus (offline)</button>
+      <span class="small muted" id="syncStatus" style="align-self:center">${esc(syncMsg)}</span>
+    </div>
+    <p class="small muted" style="margin-top:8px">Saat ONLINE: setiap tambah/hapus temuan &amp; skor rubrik langsung tersimpan ke Sheet; tombol ↻ menarik kontribusi penilai lain. Dashboard Kuantitatif merata-rata rubrik semua koder.</p>
+  </div>
   <div class="card"><h3>Auto-isi (heuristik)</h3>
     <p class="muted small">Memindai tiap respons untuk sinyal jelas (klaim ijmāʿ, perluasan makna modern, rujukan jilid/halaman, ketiadaan sanad) lalu menandai kandidat temuan berstatus <b>"Perlu cek ulang"</b> + skor rubrik awal. <b>Wajib diverifikasi manual</b> — heuristik tidak menggantikan penilaian koder.</p>
     <div class="row"><button class="btn gold" id="acAll">⚡ Isi otomatis semua respons (28)</button><button class="btn sec" id="acClear">Hapus hanya temuan AUTO</button></div>
@@ -390,7 +470,10 @@ function renderEkspor(){
   <div class="card"><h3>Catatan teknis</h3>
     <p class="small muted">Teks respons, ground truth Arab + terjemahan tertanam di <code>index.html</code> (offline). Temuan &amp; rubrik tersimpan di localStorage browser. Dua koder: masing-masing ekspor JSON lalu gabungkan untuk hitung kesepakatan.</p>
   </div>`;
-  $("#acAll").onclick=()=>{if(confirm("Isi otomatis 28 respons?")){autoCodeAll();alert("Selesai. Cek tab Koding/Kuantitatif.");}};
+  $("#syncSave").onclick=async()=>{sync.url=$("#syncUrl").value.trim();sync.coder=$("#syncCoder").value.trim();save();if(online()){await pullAll();}else{syncMsg="URL kosong/tidak valid — mode offline.";}renderEkspor();};
+  $("#syncPull").onclick=async()=>{await pullAll();renderEkspor();};
+  $("#syncOff").onclick=()=>{sync.url="";save();syncMsg="Mode offline (localStorage).";renderEkspor();};
+  $("#acAll").onclick=()=>{if(confirm("Isi otomatis 28 respons?")){autoCodeAll();alert("Selesai. Cek tab Koding/Kuantitatif.");renderEkspor();}};
   $("#acClear").onclick=()=>{findings=findings.filter(f=>f.coder!=="auto");save();alert("Temuan AUTO dihapus.");};
   $("#expJson").onclick=()=>download("temuan_audit.json",JSON.stringify({findings,rubric},null,2));
   $("#expCsv").onclick=()=>download("temuan_audit.csv",toCSV(findings.map(f=>{const c=catByName[f.category]||{};return{run_id:f.run_id,model:f.model,category:f.category,pillar:c.pillar||"",severity:f.severity??c.severity??"",status:f.status,coder:f.coder,quote:f.quote,source:f.source,note:f.note};})));
@@ -409,7 +492,15 @@ function showModal(title,html){
   d.onclick=e=>{if(e.target===d||e.target.id==="mX")d.remove();};
   document.body.appendChild(d);
 }
-render();
+
+// ---------- init: sinkron + auto-fill saat dibuka ----------
+async function init(){
+  render();                                  // tampil cepat dulu
+  if(online()){ await pullAll(); }
+  if(sync.auto!==false && findings.length===0){ autoCodeAll(); }   // terisi otomatis bila masih kosong
+  render();
+}
+init();
 </script>
 </body>
 </html>

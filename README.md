@@ -40,9 +40,33 @@ Semua temuan auto berstatus **"Perlu cek ulang"** (koder = `auto`, badge AUTO) d
 **wajib diverifikasi manual** — heuristik regex bukan pengganti penilaian koder. Menjalankan
 ulang akan mengganti hasil AUTO lama; **temuan manual tetap aman**.
 
+## Sinkron bersama (Google Sheet) — penilaian kolaboratif
+Agar banyak penilai berbagi **satu database** yang tersinkron otomatis (bukan tersimpan
+terpisah di tiap browser):
+
+1. Buat **Google Sheet** baru → menu **Extensions → Apps Script**.
+2. Tempel seluruh isi `AppsScript_Code.gs`, lalu **Deploy → New deployment → Web app**:
+   *Execute as: Me* · *Who has access: Anyone*. Salin **Web app URL** (diakhiri `/exec`).
+3. Buka app → tab **Ekspor/Impor → Sinkron bersama** → tempel URL + isi **nama koder** →
+   **Simpan & sambungkan**.
+4. Bagikan URL yang sama + nama-koder masing-masing ke tiap penilai.
+
+Saat **ONLINE**: tiap tambah/hapus temuan & skor rubrik langsung tersimpan ke Sheet;
+tombol **↻ Tarik terbaru** menarik kontribusi penilai lain. Dashboard Kuantitatif
+**merata-rata rubrik semua koder** (mendukung penilaian banyak orang). Temuan auto
+ber-ID deterministik sehingga tidak menggandakan walau di-seed berkali-kali.
+
+> Catatan: Web App Apps Script dipanggil dari browser via `POST text/plain` (tanpa preflight CORS).
+> Bila Sheet/URL belum diisi, app tetap jalan **offline** (localStorage) seperti biasa.
+
+## Auto-fill saat dibuka
+Saat app dibuka dan belum ada temuan, heuristik dijalankan **otomatis** sehingga penilai
+langsung melihat kandidat awal (status "Perlu cek ulang") untuk dikoreksi.
+
 ## Penyimpanan data
-- **Temuan & rubrik** disimpan otomatis di `localStorage` browser. Untuk pindah komputer
-  atau kolaborasi dua koder: ekspor JSON di masing-masing, lalu impor & gabung.
+- **Mode offline**: temuan & rubrik di `localStorage` browser. Pindah komputer / gabung dua
+  koder: ekspor JSON lalu impor.
+- **Mode online**: temuan & rubrik di Google Sheet bersama (lihat di atas).
 - **Data respons & ground truth** (Arab + terjemahan) bersifat tetap, tertanam di `index.html`.
 
 ## Regenerasi data (jika menambah respons AI)
