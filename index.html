@@ -120,33 +120,41 @@ const models=[...new Set(DATA.responses.map(r=>r.model))];
 const RUB=DATA.taxonomy.rubric;
 const pcls=p=>p==="P1"?"p1":p==="P2"?"p2":"p3";
 
-// ---------- scoring: Indeks Akurasi (penalti negatif) ----------
+// ---------- identitas koder ----------
+function myCoder(){ return (sync.coder&&String(sync.coder).trim())?String(sync.coder).trim():"saya"; }
+function coderList(){ const s=new Set(); findings.forEach(f=>{if(f.coder)s.add(String(f.coder));}); rubricAll.forEach(r=>{if(r.coder)s.add(String(r.coder));}); s.add(myCoder()); return [...s].filter(c=>c&&c!=="auto").sort(); }
+let dashView="__ALL__";   // tampilan dashboard: "__ALL__" (gabungan) atau nama koder
+
+// ---------- scoring: Indeks Akurasi (penalti negatif), per koder ----------
 const statusF=s=>cfg.statusFactor[s]??0;
 function findingPenalty(f){const c=catByName[f.category];if(!c)return 0;const sev=f.severity!=null?f.severity:c.severity;return sev*(cfg.pillarWeight[c.pillar]??1)*statusF(f.status);}
-const runFindings=run=>findings.filter(f=>f.run_id===run);
-function runScore(run){const pen=runFindings(run).reduce((a,f)=>a+findingPenalty(f),0);return Math.max(0,+(100-pen*cfg.K).toFixed(1));}
-function modelScore(m){const rs=DATA.responses.filter(r=>r.model===m);return rs.length?+(rs.reduce((a,r)=>a+runScore(r.run_id),0)/rs.length).toFixed(1):100;}
+function cFindings(run,coder){ return findings.filter(f=>f.run_id===run && String(f.coder)===String(coder)); }
+function runScoreC(run,coder){ const pen=cFindings(run,coder).reduce((a,f)=>a+findingPenalty(f),0); return Math.max(0,+(100-pen*cfg.K).toFixed(1)); }
+function modelScoreC(m,coder){ const rs=DATA.responses.filter(r=>r.model===m); return rs.length?+(rs.reduce((a,r)=>a+runScoreC(r.run_id,coder),0)/rs.length).toFixed(1):100; }
+// wrapper koder aktif (dipakai tab Koding)
+const runFindings=run=>cFindings(run,myCoder());
+const runScore=run=>runScoreC(run,myCoder());
+const modelScore=m=>modelScoreC(m,myCoder());
+// gabungan lintas koder = rata-rata skor tiap koder
+function runScoreAll(run){ const cs=coderList(); const vs=cs.map(c=>runScoreC(run,c)); return vs.length?+(vs.reduce((a,b)=>a+b,0)/vs.length).toFixed(1):100; }
+function modelScoreAll(m){ const cs=coderList(); const vs=cs.map(c=>modelScoreC(m,c)); return vs.length?+(vs.reduce((a,b)=>a+b,0)/vs.length).toFixed(1):100; }
 const scoreColor=v=>v>=85?"var(--good)":v>=65?"var(--warn)":"var(--bad)";
 
-// ---------- scoring: Skor Kualitas (rubrik positif, sadar multi-koder) ----------
-// Sel rubrik untuk satu run (semua koder). Online: dari rubricAll. Offline: dari rubric lokal (koder ini).
-function rubCells(run){
-  if(online()) return rubricAll.filter(r=>String(r.run_id)===String(run)&&r.value!=null&&r.value!=="");
-  const o=rubric[run]||{}; return Object.keys(o).filter(d=>o[d]!=null&&o[d]!=="").map(d=>({run_id:run,coder:sync.coder||"manual",dim:d,value:+o[d]}));
-}
-// Skor rubrik yang sedang DIEDIT (milik koder aktif).
-function rubScores(run){
-  if(online()){const out={};rubricAll.filter(r=>String(r.run_id)===String(run)&&String(r.coder)===String(sync.coder)).forEach(r=>out[r.dim]=+r.value);return out;}
-  return rubric[run]||{};
-}
-function qualityScore(run){
-  const cells=rubCells(run); if(!cells.length) return null;
-  const byDim={}; cells.forEach(c=>{(byDim[c.dim]=byDim[c.dim]||[]).push(+c.value);});
-  const means=Object.values(byDim).map(a=>a.reduce((x,y)=>x+y,0)/a.length);
-  return +(means.reduce((x,y)=>x+y,0)/(means.length*2)*100).toFixed(1);
-}
-function modelQuality(m){const rs=DATA.responses.filter(r=>r.model===m).map(r=>qualityScore(r.run_id)).filter(v=>v!=null);return rs.length?+(rs.reduce((a,v)=>a+v,0)/rs.length).toFixed(1):null;}
-function dimAvg(dimId){const vals=[];DATA.responses.forEach(r=>rubCells(r.run_id).filter(c=>c.dim===dimId).forEach(c=>vals.push(+c.value)));return vals.length?+(vals.reduce((a,v)=>a+v,0)/vals.length).toFixed(2):null;}
+// ---------- scoring: Skor Kualitas (rubrik), per koder ----------
+// rubricAll = SATU penyimpanan rubrik (online & offline): baris {run_id,coder,dim,value}
+function rubScoresC(run,coder){ const out={}; rubricAll.filter(r=>String(r.run_id)===String(run)&&String(r.coder)===String(coder)&&r.value!=null&&r.value!=="").forEach(r=>out[r.dim]=+r.value); return out; }
+const rubScores=run=>rubScoresC(run,myCoder());                    // koder aktif (untuk edit)
+function qualityScoreC(run,coder){ const o=rubScoresC(run,coder); const vals=RUB.map(d=>o[d.id]).filter(v=>v!=null); if(!vals.length)return null; return +(vals.reduce((a,v)=>a+v,0)/(vals.length*2)*100).toFixed(1); }
+const qualityScore=run=>qualityScoreC(run,myCoder());
+function qualityRunAll(run){ const cs=coderList(); const vs=cs.map(c=>qualityScoreC(run,c)).filter(v=>v!=null); return vs.length?+(vs.reduce((a,b)=>a+b,0)/vs.length).toFixed(1):null; }
+function modelQualityC(m,coder){ const rs=DATA.responses.filter(r=>r.model===m).map(r=>qualityScoreC(r.run_id,coder)).filter(v=>v!=null); return rs.length?+(rs.reduce((a,v)=>a+v,0)/rs.length).toFixed(1):null; }
+const modelQuality=m=>modelQualityC(m,myCoder());
+function modelQualityAll(m){ const cs=coderList(); const vs=cs.map(c=>modelQualityC(m,c)).filter(v=>v!=null); return vs.length?+(vs.reduce((a,b)=>a+b,0)/vs.length).toFixed(1):null; }
+function dimAvgC(dimId,coder){ const vals=[]; DATA.responses.forEach(r=>{const o=rubScoresC(r.run_id,coder); if(o[dimId]!=null)vals.push(o[dimId]);}); return vals.length?+(vals.reduce((a,v)=>a+v,0)/vals.length).toFixed(2):null; }
+function dimAvgAll(dimId){ const vals=[]; coderList().forEach(c=>DATA.responses.forEach(r=>{const o=rubScoresC(r.run_id,c); if(o[dimId]!=null)vals.push(o[dimId]);})); return vals.length?+(vals.reduce((a,v)=>a+v,0)/vals.length).toFixed(2):null; }
+// skor keseluruhan seorang koder (rata-rata 28 respons)
+function overallIndeksC(coder){ return +(DATA.responses.reduce((a,r)=>a+runScoreC(r.run_id,coder),0)/DATA.responses.length).toFixed(1); }
+function overallQualityC(coder){ const vs=DATA.responses.map(r=>qualityScoreC(r.run_id,coder)).filter(v=>v!=null); return vs.length?+(vs.reduce((a,b)=>a+b,0)/vs.length).toFixed(1):null; }
 
 // ===================================================================
 //  SYNC (Google Sheet via Apps Script Web App)
@@ -154,7 +162,7 @@ function dimAvg(dimId){const vals=[];DATA.responses.forEach(r=>rubCells(r.run_id
 function postSync(payload){ if(!online())return Promise.resolve(); return fetch(sync.url,{method:"POST",body:JSON.stringify(payload)}).catch(e=>{syncMsg="⚠ gagal kirim: "+e;}); }
 function pushFinding(f){ return postSync({action:"upsertFinding",finding:flatF(f)}); }
 function delFindingRemote(id){ return postSync({action:"deleteFinding",id}); }
-function pushRubric(run,dim,val){ return postSync({action:"setRubric",run_id:run,coder:sync.coder||"manual",dim,value:(val==null?"":val)}); }
+function pushRubric(run,dim,val){ return postSync({action:"setRubric",run_id:run,coder:myCoder(),dim,value:(val==null?"":val)}); }
 function flatF(f){return {id:f.id,run_id:f.run_id,model:f.model,category:f.category,severity:f.severity??"",status:f.status,coder:f.coder,quote:f.quote,source:f.source,note:f.note};}
 async function pullAll(){
   if(!online())return;
@@ -162,8 +170,8 @@ async function pullAll(){
     syncMsg="menarik data…"; if(typeof render==="function"&&tab==="ekspor")renderSyncStatus();
     const res=await fetch(sync.url); const d=await res.json();
     if(!d.ok)throw new Error("respons server bukan ok");
-    findings=(d.findings||[]).map(x=>({id:String(x.id),run_id:String(x.run_id),model:x.model,category:x.category,severity:(x.severity===""||x.severity==null)?null:+x.severity,status:x.status,coder:x.coder,quote:x.quote,source:x.source,note:x.note}));
-    rubricAll=(d.rubric||[]).map(r=>({run_id:String(r.run_id),coder:String(r.coder),dim:String(r.dim),value:+r.value}));
+    findings=(d.findings||[]).map(x=>({id:String(x.id),run_id:String(x.run_id),model:x.model,category:x.category,severity:(x.severity===""||x.severity==null)?null:+x.severity,status:x.status,coder:String(x.coder),quote:x.quote,source:x.source,note:x.note})).filter(f=>f.coder!=="auto");
+    rubricAll=(d.rubric||[]).map(r=>({run_id:String(r.run_id),coder:String(r.coder),dim:String(r.dim),value:+r.value})).filter(r=>r.coder!=="auto");
     save(); syncMsg="✓ tersinkron ("+findings.length+" temuan, "+rubricAll.length+" sel rubrik)";
   }catch(e){ syncMsg="⚠ gagal tarik: "+e.message; }
 }
@@ -191,16 +199,16 @@ function sentenceWith(text,re){
   const m=text.match(re); return m?text.slice(Math.max(0,text.indexOf(m[0])-40),text.indexOf(m[0])+120).trim():"";
 }
 function autoCode(run,bulkAcc){
-  const r=respByRun[run], text=r.paragraphs.join("\n");
-  findings=findings.filter(f=>!(f.run_id===run&&f.coder==="auto"));   // ganti hasil auto lama, simpan manual
-  const slug=s=>s.replace(/[^A-Za-z]+/g,"");
+  const r=respByRun[run], text=r.paragraphs.join("\n"), me=myCoder();
+  findings=findings.filter(f=>!(f.run_id===run&&String(f.coder)===String(me)&&String(f.id).indexOf("auto_")===0));   // ganti auto koder ini, simpan manual & koder lain
+  const slug=s=>String(s).replace(/[^A-Za-z0-9]+/g,"");
   const newFs=[];
-  const add=(cat,re,note)=>{const q=sentenceWith(text,re);const f={id:"auto_"+run+"_"+slug(cat),run_id:run,model:r.model,category:cat,severity:null,status:"Perlu cek ulang",coder:"auto",quote:q.slice(0,300),source:"",note:note};findings.push(f);newFs.push(f);};
+  const add=(cat,re,note)=>{const q=sentenceWith(text,re);const f={id:"auto_"+slug(me)+"_"+run+"_"+slug(cat),run_id:run,model:r.model,category:cat,severity:null,status:"Perlu cek ulang",coder:me,quote:q.slice(0,300),source:"",note:note};findings.push(f);newFs.push(f);};
   if(SIG.ijma.test(text)) add("False Consensus (Ijmāʿ)",SIG.ijma,"Auto: terdeteksi klaim kesepakatan/ijmāʿ — cek apakah sumber justru khilāf.");
   if(SIG.modern.test(text)) add("Anachronistic Expansion",SIG.modern,"Auto: terdeteksi perluasan makna ke ranah modern/umum — cek dasar ma'thūr.");
   if(SIG.cite.test(text)) add("Citation Fabrication",SIG.cite,"Auto: terdeteksi rujukan jilid/halaman — verifikasi ke edisi sumber.");
   if(!SIG.sanadStrong.test(text)&&!SIG.sanadWeak.test(text)) add("Essay-ization",/.+/,"Auto: tak ada penanda sanad/atsar — kemungkinan esai-isasi.");
-  // rubrik otomatis koder "auto" (dim bersinyal jelas; r6,r7 dibiarkan manual)
+  // rubrik otomatis koder ini — hanya ISI dim yang belum ada (jangan timpa nilai manual)
   const R={};
   const muf=[SIG.tabari,SIG.ibnkathir,SIG.qurtubi].filter(re=>re.test(text)).length;
   R.r1 = muf>=3?2:muf===2?1:0;
@@ -211,11 +219,9 @@ function autoCode(run,bulkAcc){
   if(SIG.modern.test(text)) R.r8=0;
   const rubRows=[];
   Object.keys(R).forEach(dim=>{
-    const ac="auto";
-    rubricAll=rubricAll.filter(x=>!(x.run_id===run&&x.coder===ac&&x.dim===dim));
-    rubricAll.push({run_id:run,coder:ac,dim,value:R[dim]});
-    rubRows.push({run_id:run,coder:ac,dim,value:R[dim]});
-    if(!online()){ if(!rubric[run])rubric[run]={}; if(rubric[run][dim]==null) rubric[run][dim]=R[dim]; }
+    if(rubricAll.some(x=>x.run_id===run&&String(x.coder)===String(me)&&x.dim===dim)) return;  // sudah ada → jangan timpa
+    rubricAll.push({run_id:run,coder:me,dim,value:R[dim]});
+    rubRows.push({run_id:run,coder:me,dim,value:R[dim]});
   });
   save();
   if(bulkAcc){ newFs.forEach(f=>bulkAcc.findings.push(flatF(f))); rubRows.forEach(x=>bulkAcc.rubric.push(x)); }
@@ -224,18 +230,15 @@ function autoCode(run,bulkAcc){
 function autoCodeAll(){
   const acc={findings:[],rubric:[]};
   DATA.responses.forEach(r=>autoCode(r.run_id,acc));
-  if(online()) postSync({action:"bulk",findings:acc.findings,rubric:acc.rubric}).then(()=>{syncMsg="✓ auto-fill terkirim ke server";renderSyncStatus();});
+  if(online()&&(acc.findings.length||acc.rubric.length)) postSync({action:"bulk",findings:acc.findings,rubric:acc.rubric}).then(()=>{syncMsg="✓ kandidat auto ("+myCoder()+") terkirim";renderSyncStatus();});
 }
 // rubrik: set / batal nilai 1 dimensi (koder aktif)
 function setRub(run,dim,val){
-  if(online()){
-    rubricAll=rubricAll.filter(x=>!(x.run_id===run&&String(x.coder)===String(sync.coder)&&x.dim===dim));
-    if(val!=null) rubricAll.push({run_id:run,coder:sync.coder||"manual",dim,value:val});
-    pushRubric(run,dim,val);
-  } else {
-    if(!rubric[run])rubric[run]={}; rubric[run][dim]=val;
-  }
+  const me=myCoder();
+  rubricAll=rubricAll.filter(x=>!(x.run_id===run&&String(x.coder)===String(me)&&x.dim===dim));
+  if(val!=null) rubricAll.push({run_id:run,coder:me,dim,value:val});
   save();
+  if(online()) pushRubric(run,dim,val);
 }
 
 // ---------- nav ----------
@@ -292,7 +295,14 @@ function renderKoding(){
   const statusOpts=DATA.taxonomy.status_options.map(s=>`<option ${s==="Terkonfirmasi"?"selected":""}>${esc(s)}</option>`).join("");
   const gtParas = gtMode==="ar"? gt.arabic : (gt.translation.length?gt.translation:gt.arabic);
 
+  const otherCoders=[...new Set(findings.filter(f=>f.run_id===curRun&&String(f.coder)!==String(myCoder())).map(f=>f.coder))];
   $("#main").innerHTML=`
+  <div class="card" style="padding:10px 16px">
+    <div class="flexsb">
+      <div class="small">Anda menilai sebagai: <b style="color:var(--acc2)">${esc(myCoder())}</b> ${online()?'<span class="autotag" style="color:var(--good);border-color:var(--good)">ONLINE</span>':'<span class="tag">offline</span>'} <button class="btn sec sm" id="btnCoder" style="margin-left:6px">Ganti nama</button></div>
+      <div class="small muted">${otherCoders.length?('Koder lain di respons ini: '+otherCoders.map(esc).join(', ')+' (penilaian mereka terpisah, tidak Anda ubah)'):'Penilaian Anda tersimpan terpisah dari koder lain.'}</div>
+    </div>
+  </div>
   <div class="card">
     <div class="flexsb">
       <div style="flex:1;min-width:260px"><label>Pilih respons AI</label><select id="selRun">${opts}</select></div>
@@ -341,7 +351,7 @@ function renderKoding(){
       <div class="field" style="flex:2"><label>Kategori error</label><select id="fCat">${catOpts}</select></div>
       <div class="field" style="max-width:120px"><label>Severity</label><select id="fSev"><option value="">(default)</option><option>1</option><option>2</option><option>3</option></select></div>
       <div class="field" style="max-width:170px"><label>Status</label><select id="fStat">${statusOpts}</select></div>
-      <div class="field" style="max-width:130px"><label>Koder</label><input type="text" id="fCoder" placeholder="Koder A" value="${esc(sync.coder||'')}"></div>
+      <div class="field" style="max-width:130px"><label>Koder</label><input type="text" id="fCoder" placeholder="Koder A" value="${esc(myCoder())}"></div>
     </div>
     <div class="row" style="margin-top:10px">
       <div class="field" style="flex:2"><label>Kutipan bermasalah (verbatim)</label><textarea id="fQuote" placeholder="Tempel frasa persis dari respons…"></textarea></div>
@@ -360,6 +370,7 @@ function renderKoding(){
   </div>`;
 
   $("#selRun").onchange=e=>{curRun=e.target.value;renderKoding();};
+  $("#btnCoder").onclick=async()=>{const n=prompt("Nama koder Anda (penilaian tersimpan terpisah per nama):",myCoder());if(n&&n.trim()){sync.coder=n.trim();save();if(online())await pullAll();const me=myCoder();if(!findings.some(f=>String(f.coder)===String(me)))autoCodeAll();renderKoding();}};
   $$("#gtsel .chip").forEach(c=>c.onclick=()=>{curGT=c.dataset.gt;renderKoding();});
   $("#gA").onclick=()=>{gtMode="ar";renderKoding();}; $("#gT").onclick=()=>{gtMode="tr";renderKoding();};
   $("#btnAdd").onclick=addFinding;
@@ -380,7 +391,7 @@ function renderRubItem(d){
 }
 function renderFindRow(f,i){
   const c=catByName[f.category]||{}, sev=f.severity!=null?f.severity:c.severity;
-  return `<tr class="findrow"><td>${i+1}</td><td>${esc(f.category)} ${f.coder==='auto'?'<span class="autotag">AUTO</span>':''}</td>
+  return `<tr class="findrow"><td>${i+1}</td><td>${esc(f.category)} ${String(f.id).indexOf('auto_')===0?'<span class="autotag">AUTO</span>':''}</td>
     <td><span class="pill ${c.pillar}">${c.pillar||""}</span></td><td>${sev??""}</td>
     <td>${esc(f.quote)}</td><td>${esc(f.source)}</td><td>${esc(f.status)}</td><td>${esc(f.coder)}</td><td>${esc(f.note)}</td>
     <td><button class="btn danger sm" data-del="${f.id}">✕</button></td></tr>`;
@@ -390,13 +401,24 @@ function addFinding(){
   if(!q){alert("Isi kutipan bermasalah dulu.");return;}
   const f={id:"f"+Date.now()+Math.floor(Math.random()*1000),run_id:curRun,model:respByRun[curRun].model,
     category:$("#fCat").value,severity:$("#fSev").value?+$("#fSev").value:null,status:$("#fStat").value,
-    coder:$("#fCoder").value.trim()||sync.coder||"manual",quote:q,source:$("#fSrc").value.trim(),note:$("#fNote").value.trim()};
+    coder:$("#fCoder").value.trim()||myCoder(),quote:q,source:$("#fSrc").value.trim(),note:$("#fNote").value.trim()};
   findings.push(f);save();pushFinding(f);renderKoding();
 }
 
 // ---------- TAB: Kuantitatif ----------
 function renderKuant(){
-  const live=findings.filter(f=>f.status!=="Tidak terbukti");
+  const coders=coderList();
+  if(dashView!=="__ALL__" && !coders.includes(dashView)) dashView="__ALL__";
+  const isAll=dashView==="__ALL__";
+  const inView=f=> isAll || String(f.coder)===String(dashView);
+  // fungsi skor sesuai tampilan
+  const mScore=m=> isAll?modelScoreAll(m):modelScoreC(m,dashView);
+  const mQual =m=> isAll?modelQualityAll(m):modelQualityC(m,dashView);
+  const rScore=run=> isAll?runScoreAll(run):runScoreC(run,dashView);
+  const rQual =run=> isAll?qualityRunAll(run):qualityScoreC(run,dashView);
+  const dAvg  =dim=> isAll?dimAvgAll(dim):dimAvgC(dim,dashView);
+
+  const live=findings.filter(f=>f.status!=="Tidak terbukti" && inView(f));
   const byCat={},byPil={P1:0,P2:0,P3:0},byMod={};
   DATA.taxonomy.categories.forEach(c=>byCat[c.name]=0); models.forEach(m=>byMod[m]=0);
   live.forEach(f=>{byCat[f.category]=(byCat[f.category]||0)+1;const c=catByName[f.category];if(c)byPil[c.pillar]++;byMod[f.model]=(byMod[f.model]||0)+1;});
@@ -405,22 +427,43 @@ function renderKuant(){
   const catRows=DATA.taxonomy.categories.map(c=>{const v=byCat[c.name];
     return `<tr><td>${esc(c.name)}</td><td><span class="pill ${c.pillar}">${c.pillar}</span></td><td style="width:42%"><div class="bar-track"><div class="bar" style="width:${v/maxCat*100}%;background:var(--${pcls(c.pillar)})"></div></div></td><td style="text-align:right;font-weight:700">${v}</td></tr>`;}).join("");
 
-  const modRows=models.map(m=>{const sc=modelScore(m),ql=modelQuality(m),cnt=byMod[m],rs=DATA.responses.filter(r=>r.model===m);
+  const modRows=models.map(m=>{const sc=mScore(m),ql=mQual(m),cnt=byMod[m],rs=DATA.responses.filter(r=>r.model===m);
     return `<tr><td><b>${esc(m)}</b></td><td>${rs.length}</td><td style="text-align:right">${cnt}</td>
       <td style="width:24%"><div class="bar-track"><div class="bar" style="width:${sc}%;background:${scoreColor(sc)}"></div></div></td>
       <td style="text-align:right"><span class="scorebadge sm" style="background:${scoreColor(sc)};color:#08151d">${sc}</span></td>
       <td style="text-align:right"><span class="scorebadge sm" style="background:${ql==null?'var(--panel2)':scoreColor(ql)};color:${ql==null?'var(--mut)':'#08151d'}">${ql==null?'—':ql}</span></td></tr>`;}).join("");
 
-  const dimRows=RUB.map(d=>{const a=dimAvg(d.id);return `<tr><td>${esc(d.name)}</td><td style="width:50%"><div class="bar-track"><div class="bar" style="width:${a==null?0:a/2*100}%;background:${a==null?'var(--panel2)':scoreColor(a/2*100)}"></div></div></td><td style="text-align:right;font-weight:700">${a==null?'—':a+' / 2'}</td></tr>`;}).join("");
+  const dimRows=RUB.map(d=>{const a=dAvg(d.id);return `<tr><td>${esc(d.name)}</td><td style="width:50%"><div class="bar-track"><div class="bar" style="width:${a==null?0:a/2*100}%;background:${a==null?'var(--panel2)':scoreColor(a/2*100)}"></div></div></td><td style="text-align:right;font-weight:700">${a==null?'—':a+' / 2'}</td></tr>`;}).join("");
 
-  const respRows=DATA.responses.map(r=>{const sc=runScore(r.run_id),q=qualityScore(r.run_id),n=runFindings(r.run_id).length;
+  const respRows=DATA.responses.map(r=>{const sc=rScore(r.run_id),q=rQual(r.run_id),n=findings.filter(f=>f.run_id===r.run_id&&inView(f)).length;
     return `<tr><td>${esc(r.run_id)}</td><td>${esc(r.model)}</td><td>V${r.version}</td><td style="text-align:right">${n}</td>
       <td style="text-align:right"><span class="scorebadge sm" style="background:${scoreColor(sc)};color:#08151d">${sc}</span></td>
       <td style="text-align:right"><span class="scorebadge sm" style="background:${q==null?'var(--panel2)':scoreColor(q)};color:${q==null?'var(--mut)':'#08151d'}">${q==null?'—':q}</span></td></tr>`;}).join("");
 
+  // tabel perbandingan antar koder (selalu tampil)
+  const coderRows=coders.map(c=>{const idx=overallIndeksC(c),ql=overallQualityC(c),n=findings.filter(f=>String(f.coder)===String(c)).length;
+    return `<tr><td><b>${esc(c)}</b> ${c===myCoder()?'<span class="tag">Anda</span>':''}</td><td style="text-align:right">${n}</td>
+      <td style="text-align:right"><span class="scorebadge sm" style="background:${scoreColor(idx)};color:#08151d">${idx}</span></td>
+      <td style="text-align:right"><span class="scorebadge sm" style="background:${ql==null?'var(--panel2)':scoreColor(ql)};color:${ql==null?'var(--mut)':'#08151d'}">${ql==null?'—':ql}</span></td>
+      <td><button class="btn sec sm" data-viewcoder="${esc(c)}">lihat</button></td></tr>`;}).join("");
+  const selOpts=`<option value="__ALL__" ${isAll?'selected':''}>Semua koder (gabungan)</option>`+coders.map(c=>`<option value="${esc(c)}" ${dashView===c?'selected':''}>${esc(c)}</option>`).join("");
+  const viewLabel=isAll?`Gabungan ${coders.length} koder (rata-rata antar-koder)`:`Koder: ${esc(dashView)}`;
+
   $("#main").innerHTML=`
   <div class="card">
-    <div class="flexsb"><h3>Papan skor per model</h3><span class="small muted">Indeks Akurasi = 100 − penalti×K · Skor Kualitas = rata-rata rubrik (0–2 → %)</span></div>
+    <div class="flexsb"><h3>Tampilan dashboard</h3>
+      <div style="display:flex;gap:8px;align-items:center"><label style="margin:0">Lihat sebagai</label>
+        <select id="dashSel" style="width:auto;min-width:220px">${selOpts}</select></div></div>
+    <p class="small muted" style="margin-top:6px">Sedang menampilkan: <b>${viewLabel}</b>. ${isAll?'Skor = rata-rata skor tiap koder; frekuensi = akumulasi semua koder.':'Hanya penilaian koder ini.'}</p>
+  </div>
+
+  <div class="card"><h3>Perbandingan antar penilai</h3>
+    <table><thead><tr><th>Koder</th><th style="text-align:right">#Temuan</th><th style="text-align:right">Indeks (28 run)</th><th style="text-align:right">Kualitas</th><th></th></tr></thead><tbody>${coderRows}</tbody></table>
+    <p class="small muted" style="margin-top:6px">Indeks &amp; Kualitas = rata-rata seluruh 28 respons untuk koder tsb.</p>
+  </div>
+
+  <div class="card">
+    <div class="flexsb"><h3>Papan skor per model — ${viewLabel}</h3><span class="small muted">Indeks = 100 − penalti×K · Kualitas = rata-rata rubrik (0–2 → %)</span></div>
     <table><thead><tr><th>Model</th><th>#Run</th><th style="text-align:right">#Temuan</th><th>Indeks (bar)</th><th style="text-align:right">Indeks Akurasi</th><th style="text-align:right">Skor Kualitas</th></tr></thead><tbody>${modRows}</tbody></table>
   </div>
   <div class="grid2">
@@ -439,9 +482,11 @@ function renderKuant(){
       <p class="small muted" style="margin-top:8px">Status "Tidak terbukti" = 0 · "Diragukan" = ½ · "Perlu cek ulang" = ¼ · "Terkonfirmasi" = 1.</p>
     </div>
   </div>
-  <div class="card"><h3>Rata-rata rubrik per dimensi (respons terisi)</h3><table><tbody>${dimRows}</tbody></table></div>
+  <div class="card"><h3>Rata-rata rubrik per dimensi</h3><table><tbody>${dimRows}</tbody></table></div>
   <div class="card"><h3>Skor per respons (28 run)</h3>
     <table><thead><tr><th>Run ID</th><th>Model</th><th>Ver</th><th style="text-align:right">#Temuan</th><th style="text-align:right">Indeks</th><th style="text-align:right">Kualitas</th></tr></thead><tbody>${respRows}</tbody></table></div>`;
+  $("#dashSel").onchange=e=>{dashView=e.target.value;renderKuant();};
+  $$("#main [data-viewcoder]").forEach(b=>b.onclick=()=>{dashView=b.dataset.viewcoder;renderKuant();});
   $("#btnW").onclick=()=>{cfg.pillarWeight.P1=+$("#wP1").value||0;cfg.pillarWeight.P2=+$("#wP2").value||0;cfg.pillarWeight.P3=+$("#wP3").value||0;cfg.K=+$("#wK").value||0;save();renderKuant();};
 }
 
@@ -483,11 +528,11 @@ function renderEkspor(){
   $("#syncOff").onclick=()=>{sync.url="";save();syncMsg="Mode offline (localStorage).";renderEkspor();};
   $("#acAll").onclick=()=>{if(confirm("Isi otomatis 28 respons?")){autoCodeAll();alert("Selesai. Cek tab Koding/Kuantitatif.");renderEkspor();}};
   $("#acClear").onclick=()=>{findings=findings.filter(f=>f.coder!=="auto");save();alert("Temuan AUTO dihapus.");};
-  $("#expJson").onclick=()=>download("temuan_audit.json",JSON.stringify({findings,rubric},null,2));
-  $("#expCsv").onclick=()=>download("temuan_audit.csv",toCSV(findings.map(f=>{const c=catByName[f.category]||{};return{run_id:f.run_id,model:f.model,category:f.category,pillar:c.pillar||"",severity:f.severity??c.severity??"",status:f.status,coder:f.coder,quote:f.quote,source:f.source,note:f.note};})));
-  $("#expScore").onclick=()=>{const rows=DATA.responses.map(r=>{const o={run_id:r.run_id,model:r.model,version:r.version,n_temuan:runFindings(r.run_id).length,indeks_akurasi:runScore(r.run_id),skor_kualitas:qualityScore(r.run_id)??""};RUB.forEach(d=>o[d.id]=rubScores(r.run_id)[d.id]??"");return o;});download("skor_audit.csv",toCSV(rows));};
-  $("#impBtn").onclick=()=>{try{let a=JSON.parse($("#impArea").value);if(a&&a.findings){if(a.rubric)rubric=a.rubric;a=a.findings;}if(!Array.isArray(a))throw 0;findings=a;save();alert("Impor "+a.length+" temuan.");render();}catch(e){alert("JSON tidak valid.");}};
-  $("#clrBtn").onclick=()=>{if(confirm("Hapus semua temuan DAN rubrik?")){findings=[];rubric={};save();render();}};
+  $("#expJson").onclick=()=>download("temuan_audit.json",JSON.stringify({findings,rubric:rubricAll},null,2));
+  $("#expCsv").onclick=()=>download("temuan_audit.csv",toCSV(findings.map(f=>{const c=catByName[f.category]||{};return{run_id:f.run_id,model:f.model,coder:f.coder,category:f.category,pillar:c.pillar||"",severity:f.severity??c.severity??"",status:f.status,quote:f.quote,source:f.source,note:f.note};})));
+  $("#expScore").onclick=()=>{const rows=[];coderList().forEach(coder=>DATA.responses.forEach(r=>{const o={coder,run_id:r.run_id,model:r.model,version:r.version,n_temuan:cFindings(r.run_id,coder).length,indeks_akurasi:runScoreC(r.run_id,coder),skor_kualitas:qualityScoreC(r.run_id,coder)??""};const rs=rubScoresC(r.run_id,coder);RUB.forEach(d=>o[d.id]=rs[d.id]??"");rows.push(o);}));download("skor_audit.csv",toCSV(rows));};
+  $("#impBtn").onclick=()=>{try{let a=JSON.parse($("#impArea").value);if(a&&a.findings){if(Array.isArray(a.rubric))rubricAll=a.rubric.map(r=>({run_id:String(r.run_id),coder:String(r.coder),dim:String(r.dim),value:+r.value}));a=a.findings;}if(!Array.isArray(a))throw 0;findings=a;save();alert("Impor "+a.length+" temuan.");render();}catch(e){alert("JSON tidak valid.");}};
+  $("#clrBtn").onclick=()=>{if(confirm("Hapus semua temuan DAN rubrik (lokal ini)?")){findings=[];rubricAll=[];save();render();}};
 }
 function toCSV(arr){if(!arr.length)return"";const keys=Object.keys(arr[0]);const q=v=>'"'+String(v??"").replace(/"/g,'""')+'"';return keys.join(",")+"\n"+arr.map(o=>keys.map(k=>q(o[k])).join(",")).join("\n");}
 function download(name,txt){const b=new Blob([txt],{type:"text/plain;charset=utf-8"}),u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download=name;a.click();URL.revokeObjectURL(u);}
@@ -505,11 +550,14 @@ function showModal(title,html){
 async function init(){
   render();                                  // tampil cepat dulu
   if(online() && !sync.coder){               // minta nama koder sekali (mode shared)
-    const n=prompt("Selamat datang. Masukkan NAMA KODER Anda (agar kontribusi penilaian terlacak):");
+    const n=prompt("Selamat datang. Masukkan NAMA KODER Anda (agar penilaian Anda terpisah & tak tertimpa koder lain):");
     if(n&&n.trim()){ sync.coder=n.trim(); save(); }
   }
   if(online()){ await pullAll(); }
-  if(sync.auto!==false && findings.length===0){ autoCodeAll(); }   // seed otomatis bila DB masih kosong
+  // seed kandidat auto HANYA untuk koder ini bila ia belum punya temuan apa pun (tak menyentuh data koder lain)
+  const me=myCoder();
+  const iHaveNone=!findings.some(f=>String(f.coder)===String(me));
+  if(sync.auto!==false && iHaveNone){ autoCodeAll(); }
   render();
 }
 init();
