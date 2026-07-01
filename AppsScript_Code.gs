@@ -113,3 +113,37 @@ function doPost(e){
     lock.releaseLock();
   }
 }
+
+/* ================= BACKUP OTOMATIS =================
+ * Menduplikat tab FINDINGS & RUBRIC menjadi tab bertanggal (mis. FINDINGS_BAK_20260701).
+ * CARA PASANG (sekali saja, TIDAK perlu redeploy web app):
+ *   1. Tempel/replace kode ini, lalu Save.
+ *   2. Di dropdown fungsi (atas), pilih 'setupBackupTrigger' → Run → izinkan akses.
+ *      -> membuat trigger harian + langsung membuat backup pertama.
+ * Menyimpan maksimal 14 backup terakhir per tab (yang lama dihapus otomatis).
+ */
+function dailyBackup(){
+  var ss=_ss();
+  var tz=ss.getSpreadsheetTimeZone()||'Asia/Jakarta';
+  var stamp=Utilities.formatDate(new Date(), tz, 'yyyyMMdd_HHmm');
+  ['FINDINGS','RUBRIC'].forEach(function(name){
+    var sh=ss.getSheetByName(name); if(!sh) return;
+    var bname=name+'_BAK_'+stamp;
+    var old=ss.getSheetByName(bname); if(old) ss.deleteSheet(old);
+    var copy=sh.copyTo(ss); copy.setName(bname); copy.hideSheet();
+  });
+  _pruneBackups(ss, 14);
+  return 'backup dibuat: '+stamp;
+}
+function _pruneBackups(ss, keep){
+  ['FINDINGS','RUBRIC'].forEach(function(prefix){
+    var baks=ss.getSheets().filter(function(s){return s.getName().indexOf(prefix+'_BAK_')===0;})
+      .sort(function(a,b){return a.getName()<b.getName()?-1:1;});
+    while(baks.length>keep){ ss.deleteSheet(baks.shift()); }
+  });
+}
+function setupBackupTrigger(){
+  ScriptApp.getProjectTriggers().forEach(function(t){ if(t.getHandlerFunction()==='dailyBackup') ScriptApp.deleteTrigger(t); });
+  ScriptApp.newTrigger('dailyBackup').timeBased().everyDays(1).atHour(1).create();
+  return dailyBackup();   // buat backup pertama sekarang juga
+}
